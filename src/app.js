@@ -14,11 +14,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(cors())
 
 //Routes
-app.use('/users', authRoutes)
-app.get("/", (req, res) => {
-  res.write("<h1>Hello World</h1>")
-  res.send()
-})
+app.use(authRoutes)
 
 
 
