@@ -3,10 +3,13 @@ require("dotenv").config()
 const express = require("express")
 const cors = require("cors")
 const session = require('express-session');
+const auth = require('./middleware/auth')
 
 //App Setup
 const app = express()
 app.set('port', process.env.PORT || 5000)
+app.set('view engine', 'ejs'); 
+app.set('views', 'src/views');
 
 //Middleware
 app.use(express.json())
@@ -24,6 +27,7 @@ const authRoutes = require('./routes/auth.routes')
 const expenseRoutes = require('./routes/expense.routes')
 
 //Routes
+
 app.use(authRoutes)
 app.use('/expenses', expenseRoutes)
 

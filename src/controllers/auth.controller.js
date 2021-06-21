@@ -5,6 +5,10 @@ const db = require("../database/db")
 const jwt = require("jsonwebtoken")
 class AuthController{
 
+    static signin(req, res){
+        res.render('login')
+    }
+
     static async register(req, res){
         //Create new user in database
         let {email, username, password, password2} = req.body

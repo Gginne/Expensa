@@ -12,6 +12,6 @@ module.exports = (req, res, next) => {
         next()
 
     } catch(e){
-        res.redirect(301, "/")
+        res.redirect(301, "/login")
     }
 }
