@@ -1,11 +1,10 @@
 const Model = require('./Model')
 
 class Expense extends Model {
-    static table = "Expenses"
-    static fillable = ['amount', 'description', 'date', 'user_id']
-    
-    table = "Expenses"
-    fillable = ['amount', 'description', 'date', 'user_id']
+   
+    static get table() {
+        return "Expenses";
+    }
 
     constructor(cols){
         super(cols)
