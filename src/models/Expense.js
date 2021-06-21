@@ -1,8 +1,9 @@
 const Model = require('./Model')
 
-class User extends Model {
+class Expense extends Model {
+   
     static get table() {
-        return "Users";
+        return "Expenses";
     }
 
     constructor(cols){
@@ -11,4 +12,4 @@ class User extends Model {
 
 }
 
-module.exports = User
+module.exports = Expense
