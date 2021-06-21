@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken")
 
 module.exports = (req, res, next) => {
     const {token} = req.session
-    if(!token) return res.redirect(301, "/")
+    if(!token) return res.redirect(301, "/login");
 
     try{
         const decoded = jwt.verify(token, process.env.TOKEN_SECRET)
@@ -12,6 +12,6 @@ module.exports = (req, res, next) => {
         next()
 
     } catch(e){
-        res.redirect(301, "/login")
+        return res.redirect(301, "/login")
     }
 }

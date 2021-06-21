@@ -27,10 +27,16 @@ const authRoutes = require('./routes/auth.routes')
 const expenseRoutes = require('./routes/expense.routes')
 
 //Routes
-
+app.get("/", auth, (req, res) => {
+    res.write('<html>');
+    res.write('<body>');
+    res.write('<h1>Hello, World!</h1>');
+    res.write('</body>');
+    res.write('</html>');
+    res.end();
+})
 app.use(authRoutes)
 app.use('/expenses', expenseRoutes)
-
 
 
 //Export App
