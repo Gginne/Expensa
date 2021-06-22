@@ -47,24 +47,25 @@ class AuthController{
     }
 
     static async login(req, res){
-        const {name, password} = req.body
-        //console.log(req.body)gi
-        if (name && password) {
+        const {emailOrUsername, password} = req.body
+        if (emailOrUsername && password) {
             //Get user from model
-           
-            const user = await User.where(`email='${name}' OR username='${name}'`)
+            const user = await User.where(`email='${emailOrUsername}' OR username='${emailOrUsername}'`)
             const bcryptPassword = bcrypt.compareSync(password, user ? user.cols.password : '');
             if(user && bcryptPassword){
                 //Send message and authentication key
                 const {email, username, id} = user.cols
                 const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
                 req.session.token = token
-                return res.status(200).json({token})
+                return res.redirect("/")
+                //return res.status(200).json({token})
             } else {
-                return res.status(400).json({message: 'Invalid Username/email or password'})
+                return res.redirect("/")
+                //return res.status(400).json({message: 'Invalid Username/email or password'})
             }
         } else {
-            return res.status(400).json({message: 'Please enter Username/Email and Password!'});
+            return res.redirect("/")
+           // return res.status(400).json({message: 'Please enter Username/Email and Password!'});
         }
 
     }
