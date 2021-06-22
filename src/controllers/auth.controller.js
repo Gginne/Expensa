@@ -6,7 +6,12 @@ const jwt = require("jsonwebtoken")
 class AuthController{
 
     static signin(req, res){
-        res.render('login')
+        if(req.session.token){
+            res.redirect('/')
+        } else {
+            res.render('login')
+        }
+        
     }
 
     static async register(req, res){
@@ -48,10 +53,12 @@ class AuthController{
 
     static async login(req, res){
         const {emailOrUsername, password} = req.body
+        //console.log(req.body)
         if (emailOrUsername && password) {
             //Get user from model
             const user = await User.where(`email='${emailOrUsername}' OR username='${emailOrUsername}'`)
             const bcryptPassword = bcrypt.compareSync(password, user ? user.cols.password : '');
+            //console.log(bcryptPassword)
             if(user && bcryptPassword){
                 //Send message and authentication key
                 const {email, username, id} = user.cols
@@ -70,8 +77,9 @@ class AuthController{
 
     }
 
-    static async logout(req, res){
-
+    static logout(req, res){
+        req.session.destroy();
+        res.redirect("/login")
     }
 
 

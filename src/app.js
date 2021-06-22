@@ -3,7 +3,7 @@ require("dotenv").config()
 const express = require("express")
 const cors = require("cors")
 const session = require('express-session');
-const auth = require('./middleware/auth')
+const isLoggedIn = require('./middleware/isLoggedIn')
 
 //App Setup
 const app = express()
@@ -22,18 +22,17 @@ app.use(session({
     cookie: {maxAge: 60 * 1000 * 30}
 }));
 
+
+
 //Route imports
 const authRoutes = require('./routes/auth.routes')
 const expenseRoutes = require('./routes/expense.routes')
 
 //Routes
-app.get("/", auth, (req, res) => {
-    res.write('<html>');
-    res.write('<body>');
-    res.write('<h1>Hello, World!</h1>');
-    res.write('</body>');
-    res.write('</html>');
-    res.end();
+app.get("/", isLoggedIn, (req, res) => {
+    
+    res.render('dashboard');
+    
 })
 app.use(authRoutes)
 app.use('/expenses', expenseRoutes)

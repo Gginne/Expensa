@@ -10,6 +10,9 @@ router.route("/login")
 router.route("/register")
       .post( AuthController.register)
 
+router.route("/logout")
+      .post( AuthController.logout)
+
 
 
 
