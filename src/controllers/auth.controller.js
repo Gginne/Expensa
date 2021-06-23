@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken")
 class AuthController{
 
     static signin(req, res){
-        if(req.session.token){
+        if(req.session.user){
             res.redirect('/')
         } else {
             res.render('login')
@@ -38,8 +38,7 @@ class AuthController{
                 await newUser.save()
                 //Send message and authentication key
                 const {id} = newUser.cols
-                const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
-                req.session.token = token
+                req.session.user = {email, username, id}
                 return res.status(200).json({token})
             } catch(err){
                 console.log(err)
@@ -62,8 +61,7 @@ class AuthController{
             if(user && bcryptPassword){
                 //Send message and authentication key
                 const {email, username, id} = user.cols
-                const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
-                req.session.token = token
+                req.session.user = {email, username, id}
                 return res.redirect("/")
                 //return res.status(200).json({token})
             } else {

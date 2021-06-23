@@ -19,9 +19,11 @@ app.use(session({
     resave: false, 
     saveUninitialized: true,
     secret: process.env.SESSION_SECRET, 
-    cookie: {maxAge: 60 * 1000 * 30}
+    cookie: {
+        maxAge: 3600000,
+        expires: false
+    }
 }));
-
 
 
 //Route imports
