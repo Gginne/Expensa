@@ -5,22 +5,33 @@ const db = require("../database/db")
 const jwt = require("jsonwebtoken")
 class AuthController{
 
+    static loginreg(req, res){
+        if(req.session.user){
+            res.redirect('/')
+        } else {
+            res.render('loginreg')
+        }
+        
+    }
+
     static async register(req, res){
         //Create new user in database
         let {email, username, password, password2} = req.body
 
         if(!email || !username || !password || !password2){
-            res.status(400).json({message:'Please fill in all the fields'});
+            //res.status(400).json({message:'Please fill in all the fields'});
+            return res.redirect("/")
         }
         if(password != password2){
-            res.status(400).json({message:'Passwords dont match'});
+            //res.status(400).json({message:'Passwords dont match'});
+            return res.redirect("/")
         }
 
         const foundEmail = await User.where(`email='${email}'`)
         const foundUsername = await User.where(`username='${username}'`)
         if(foundEmail || foundUsername){
-            if(foundEmail) return res.status(400).json({message: "Email already exists"});
-            else if(foundUsername) return res.status(400).json({message: "Username already exists"});
+            if(foundEmail) return res.redirect("/") //res.status(400).json({message: "Email already exists"});
+            else if(foundUsername) return res.redirect("/") //res.status(400).json({message: "Username already exists"});
         } else {
             try{
                 const salt = await bcrypt.genSaltSync(10)
@@ -29,12 +40,12 @@ class AuthController{
                 await newUser.save()
                 //Send message and authentication key
                 const {id} = newUser.cols
-                const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
-                req.session.token = token
-                return res.status(200).json({token})
+                req.session.user = {email, username, id}
+                return res.redirect("/")
             } catch(err){
                 console.log(err)
-                return res.status(400).json({message: "Unsuccessfully registered"})
+                return res.redirect("/")
+                //return res.status(400).json({message: "Unsuccessfully registered"})
 
             }
         }
@@ -43,30 +54,33 @@ class AuthController{
     }
 
     static async login(req, res){
-        const {name, password} = req.body
-        //console.log(req.body)gi
-        if (name && password) {
+        const {emailOrUsername, password} = req.body
+        //console.log(req.body)
+        if (emailOrUsername && password) {
             //Get user from model
-           
-            const user = await User.where(`email='${name}' OR username='${name}'`)
+            const user = await User.where(`email='${emailOrUsername}' OR username='${emailOrUsername}'`)
             const bcryptPassword = bcrypt.compareSync(password, user ? user.cols.password : '');
+            //console.log(bcryptPassword)
             if(user && bcryptPassword){
                 //Send message and authentication key
                 const {email, username, id} = user.cols
-                const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
-                req.session.token = token
-                return res.status(200).json({token})
+                req.session.user = {email, username, id}
+                return res.redirect("/")
+                //return res.status(200).json({token})
             } else {
-                return res.status(400).json({message: 'Invalid Username/email or password'})
+                return res.redirect("/")
+                //return res.status(400).json({message: 'Invalid Username/email or password'})
             }
         } else {
-            return res.status(400).json({message: 'Please enter Username/Email and Password!'});
+            return res.redirect("/")
+           // return res.status(400).json({message: 'Please enter Username/Email and Password!'});
         }
 
     }
 
-    static async logout(req, res){
-
+    static logout(req, res){
+        req.session.destroy();
+        res.redirect("/auth")
     }
 
 
