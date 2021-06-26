@@ -1,11 +1,10 @@
 require("dotenv").config()
-const e = require("express");
 const User = require("../models/User")
 
 module.exports = (req, res, next) => {
     const {user} = req.session
 
-    if(!user) return res.redirect(301, "/login");
+    if(!user) return res.redirect(301, "/auth");
 
     const isUser = User.find(user.id)
     if(isUser){
@@ -13,6 +12,6 @@ module.exports = (req, res, next) => {
         res.locals.loggedIn = true;
         next()
     } else{
-        return res.redirect(301, "/login")
+        return res.redirect(301, "/auth")
     }
 }

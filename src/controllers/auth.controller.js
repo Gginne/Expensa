@@ -5,11 +5,11 @@ const db = require("../database/db")
 const jwt = require("jsonwebtoken")
 class AuthController{
 
-    static signin(req, res){
+    static loginreg(req, res){
         if(req.session.user){
             res.redirect('/')
         } else {
-            res.render('login')
+            res.render('loginreg')
         }
         
     }
@@ -19,17 +19,19 @@ class AuthController{
         let {email, username, password, password2} = req.body
 
         if(!email || !username || !password || !password2){
-            res.status(400).json({message:'Please fill in all the fields'});
+            //res.status(400).json({message:'Please fill in all the fields'});
+            return res.redirect("/")
         }
         if(password != password2){
-            res.status(400).json({message:'Passwords dont match'});
+            //res.status(400).json({message:'Passwords dont match'});
+            return res.redirect("/")
         }
 
         const foundEmail = await User.where(`email='${email}'`)
         const foundUsername = await User.where(`username='${username}'`)
         if(foundEmail || foundUsername){
-            if(foundEmail) return res.status(400).json({message: "Email already exists"});
-            else if(foundUsername) return res.status(400).json({message: "Username already exists"});
+            if(foundEmail) return res.redirect("/") //res.status(400).json({message: "Email already exists"});
+            else if(foundUsername) return res.redirect("/") //res.status(400).json({message: "Username already exists"});
         } else {
             try{
                 const salt = await bcrypt.genSaltSync(10)
@@ -39,10 +41,11 @@ class AuthController{
                 //Send message and authentication key
                 const {id} = newUser.cols
                 req.session.user = {email, username, id}
-                return res.status(200).json({token})
+                return res.redirect("/")
             } catch(err){
                 console.log(err)
-                return res.status(400).json({message: "Unsuccessfully registered"})
+                return res.redirect("/")
+                //return res.status(400).json({message: "Unsuccessfully registered"})
 
             }
         }
@@ -77,7 +80,7 @@ class AuthController{
 
     static logout(req, res){
         req.session.destroy();
-        res.redirect("/login")
+        res.redirect("/auth")
     }
 
 

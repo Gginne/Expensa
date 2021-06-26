@@ -25,6 +25,11 @@ app.use(session({
     }
 }));
 
+app.use(function(req, res, next) {
+    res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+    next();
+});
+
 
 //Route imports
 const authRoutes = require('./routes/auth.routes')
@@ -32,8 +37,8 @@ const expenseRoutes = require('./routes/expense.routes')
 
 //Routes
 app.get("/", isLoggedIn, (req, res) => {
-    
-    res.render('dashboard');
+    const {user} = req
+    res.render('dashboard', {user});
     
 })
 app.use(authRoutes)
