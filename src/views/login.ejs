@@ -1,0 +1,28 @@
+
+<%- include('./partials/header') %>
+
+<div class="row">
+    <div class="col-12 mt-5">
+  
+        <h1 class="text-center mb-3">Login</h3>
+
+        <div class="card mx-auto shadow p-3 mb-5 bg-body rounded" style="max-width: 26rem;">
+            <div class="card-body">
+                <form method="POST" action="/login">
+                    <div class="mb-3">
+                      <label for="emailOrUsername" class="form-label">Email or Username</label>
+                      <input type="text" class="form-control" id="emailOrUsername" name="emailOrUsername" aria-describedby="emailOrUsername" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Log In</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include('./partials/footer') %>

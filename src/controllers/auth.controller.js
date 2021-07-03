@@ -30,7 +30,6 @@ class AuthController{
                 //Send message and authentication key
                 const {id} = newUser.cols
                 const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
-                req.session.token = token
                 return res.status(200).json({token})
             } catch(err){
                 console.log(err)
@@ -54,7 +53,6 @@ class AuthController{
                 //Send message and authentication key
                 const {email, username, id} = user.cols
                 const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
-                req.session.token = token
                 return res.status(200).json({token})
             } else {
                 return res.status(400).json({message: 'Invalid Username/email or password'})
