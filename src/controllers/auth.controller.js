@@ -5,15 +5,6 @@ const db = require("../database/db")
 const jwt = require("jsonwebtoken")
 class AuthController{
 
-    static signin(req, res){
-        if(req.session.token){
-            res.redirect('/')
-        } else {
-            res.render('login')
-        }
-        
-    }
-
     static async register(req, res){
         //Create new user in database
         let {email, username, password, password2} = req.body
@@ -64,15 +55,12 @@ class AuthController{
                 const {email, username, id} = user.cols
                 const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
                 req.session.token = token
-                return res.redirect("/")
-                //return res.status(200).json({token})
+                return res.status(200).json({token})
             } else {
-                return res.redirect("/")
-                //return res.status(400).json({message: 'Invalid Username/email or password'})
+                return res.status(400).json({message: 'Invalid Username/email or password'})
             }
         } else {
-            return res.redirect("/")
-           // return res.status(400).json({message: 'Please enter Username/Email and Password!'});
+             return res.status(400).json({message: 'Please enter Username/Email and Password!'});
         }
 
     }
