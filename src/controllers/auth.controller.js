@@ -10,10 +10,11 @@ class AuthController{
         let {email, username, password, password2} = req.body
 
         if(!email || !username || !password || !password2){
-            res.status(400).json({message:'Please fill in all the fields'});
+            console.log('here')
+            return res.status(400).json({message:'Please fill in all the fields'});
         }
         if(password != password2){
-            res.status(400).json({message:'Passwords dont match'});
+            return res.status(400).json({message:'Passwords dont match'});
         }
 
         const foundEmail = await User.where(`email='${email}'`)

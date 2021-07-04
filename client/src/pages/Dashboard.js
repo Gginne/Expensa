@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
+import {withCookies} from 'react-cookie'
 
 class Dashboard extends Component {
+  
+
     render() {
+        const {cookies} = this.props
+        console.log(cookies.get('user'))
         return (
             <div>
                 <h2>Dashboard</h2>
@@ -9,4 +14,4 @@ class Dashboard extends Component {
         )
     }
 }
-export default  Dashboard
+export default withCookies(Dashboard)

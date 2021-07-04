@@ -23,6 +23,13 @@ class App extends Component {
     };
   }
 
+  authenticateUser = token => {
+    const {cookies} = this.props
+    const user = {token}
+    cookies.set('user', user)
+    this.setState({isAuthenticated: true})
+  }
+
 
   render() {
     const {isAuthenticated} = this.state
@@ -31,10 +38,17 @@ class App extends Component {
       <Router>
         <div className="bg-light" style={{height: '100vh'}}>
           <div className="container">
-            {isAuthenticated && <Navigation />}
             <Switch>
-              <Route exact path="/" component={()=>isAuthenticated? <Dashboard/> : <Authentication/>} />
-              
+      
+              {!isAuthenticated ? (
+                <Route path="/" component={props => <Authentication {...props} auth={this.authenticateUser}/>} />
+              ) : (
+                <>
+                  <Navigation />
+                  <Route exact path="/" component={props => <Dashboard {...props}/>} />
+                  <Route exact path="/dashboard" component={props => <Dashboard {...props}/>} />
+                </>
+              )}
             </Switch>
           </div>
         </div>
