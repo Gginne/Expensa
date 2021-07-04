@@ -8,8 +8,12 @@ class Dashboard extends Component {
         const {cookies} = this.props
         console.log(cookies.get('user'))
         return (
-            <div>
-                <h2>Dashboard</h2>
+            <div class="row">
+                <div class="col-12 mt-5">
+            
+                    <h2 class="mb-3">Welcome</h2>
+
+                </div>
             </div>
         )
     }
