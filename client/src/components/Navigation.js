@@ -1,31 +1,33 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {Navbar, Nav, NavDropdown, Button} from 'react-bootstrap'
+import  { Redirect } from 'react-router-dom'
 
-const Navigation = () => (
+const Navigation = (props) => {
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow rounded">
-      <div class="container-fluid">
-        <button class="navbar-toggler" type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="/">Dashboard </a>
-            <a class="nav-link" >Expenses</a>
-            <a class="nav-link" >Income</a>
-          </div>
-        </div>
-        <form method="POST" action="/logout">
-          <button type="submit" class="btn btn-sm btn-danger">Logout</button>
-        </form>
+    const handleLogout = () => {
+      props.logout()
+      return <Redirect to='/' />
+    }
+
+    return(
+      <div class="shadow rounded">
+        <Navbar bg="white" expand="lg">
+          <Navbar.Brand href="#home">Expensa</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+              <Nav.Link href="#home">Dashboard</Nav.Link>
+              <NavDropdown title="Add New" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">Expense/Income</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.4">Category</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+            <Button variant="danger" onClick={() => handleLogout()}>Logout</Button>
+          </Navbar.Collapse>
+        </Navbar>
       </div>
-    </nav>
-);
+    )
+};
 
 export default Navigation;

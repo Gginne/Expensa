@@ -23,11 +23,18 @@ class App extends Component {
     };
   }
 
-  authenticateUser = token => {
+  handleAuth = token => {
     const {cookies} = this.props
     const user = {token}
     cookies.set('user', user)
     this.setState({isAuthenticated: true})
+  }
+
+  handleLogout = () => {
+    const {cookies} = this.props
+  
+    cookies.remove('user')
+    this.setState({isAuthenticated: false})
   }
 
 
@@ -41,10 +48,10 @@ class App extends Component {
             <Switch>
       
               {!isAuthenticated ? (
-                <Route path="/" component={props => <Authentication {...props} auth={this.authenticateUser}/>} />
+                <Route path="/" component={props => <Authentication {...props} auth={this.handleAuth}/>} />
               ) : (
                 <>
-                  <Navigation />
+                  <Navigation logout={this.handleLogout}/>
                   <Route exact path="/" component={props => <Dashboard {...props}/>} />
                   <Route exact path="/dashboard" component={props => <Dashboard {...props}/>} />
                 </>
