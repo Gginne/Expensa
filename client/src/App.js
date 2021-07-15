@@ -7,6 +7,7 @@ import { instanceOf } from 'prop-types';
 
 import Authentication from './pages/Authentication';
 import Dashboard from './pages/Dashboard';
+import EntryPage from './pages/EntryPage';
 import Navigation from './components/Navigation';
 
 class App extends Component {
@@ -43,7 +44,7 @@ class App extends Component {
     console.log(isAuthenticated)
     return (
       <Router>
-        <div className="bg-light" style={{height: '100vh'}}>
+        <div className="bg-light" style={{ height: '100vh'}}>
           <div className="container">
             <Switch>
       
@@ -54,6 +55,7 @@ class App extends Component {
                   <Navigation logout={this.handleLogout}/>
                   <Route exact path="/" component={props => <Dashboard {...props}/>} />
                   <Route exact path="/dashboard" component={props => <Dashboard {...props}/>} />
+                  <Route exact path="/new" component={props => <EntryPage {...props}/>} />
                 </>
               )}
             </Switch>

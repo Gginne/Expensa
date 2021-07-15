@@ -17,9 +17,9 @@ const Navigation = (props) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="#home">Dashboard</Nav.Link>
-              <NavDropdown title="Add New" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Expense/Income</NavDropdown.Item>
+              <Nav.Link href="#home"><Link to="/">Dashboard</Link></Nav.Link>
+              <NavDropdown title="New Entry" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1"><Link to="/new">Expenses/Income</Link></NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.4">Category</NavDropdown.Item>
               </NavDropdown>
             </Nav>
