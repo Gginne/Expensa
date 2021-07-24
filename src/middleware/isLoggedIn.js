@@ -2,16 +2,17 @@ require("dotenv").config()
 const User = require("../models/User")
 
 module.exports = (req, res, next) => {
-    const {user} = req.session
+    const token = req.header("x-auth-token")
+    if(!token) return res.redirect(301, "/")
 
-    if(!user) return res.redirect(301, "/auth");
-
-    const isUser = User.find(user.id)
-    if(isUser){
-        req.user = user
-        res.locals.loggedIn = true;
+    try{
+        const decoded = jwt.verify(token, process.env.JWTSECRET)
+        req.user = decoded
         next()
-    } else{
-        return res.redirect(301, "/auth")
+
+    } catch(e){
+        res.redirect(301, "/")
     }
+
+    
 }
