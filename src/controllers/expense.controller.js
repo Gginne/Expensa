@@ -28,7 +28,6 @@ class ExpenseController{
     //POST - CRUD ROUTES
     static async store(req, res){ //Create new expense entry from input data in db
         const {amount, description, datetime} = req.body
-        console.log(req.body)
         if(amount && description){
             try{
                 const expense = new Expense({amount, description, datetime, user_id: req.user.id})

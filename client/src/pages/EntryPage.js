@@ -9,7 +9,7 @@ class EntryPage extends Component {
         cookies: instanceOf(Cookies).isRequired
     };
 
-    toMYSQLDatetime = d => {
+    toSQLDatetime = d => {
         d = new Date(d)
         return d.toISOString().split('T')[0] + ' ' + d.toTimeString().split(' ')[0];
     }
@@ -19,15 +19,15 @@ class EntryPage extends Component {
         const {token} = cookies.get('user')
         entries.forEach(async (entry) => {
             const {type, amount, description, datetime} = entry.data
+            const entryData = { 
+                amount: Number(amount), 
+                description, 
+                datetime: this.toSQLDatetime(datetime)
+            }
             try{
-                const res = await axios.post("/"+type, {
-                    amount: Number(amount), 
-                    description, 
-                    datetime: this.toMYSQLDatetime(datetime)
-                }, {headers: {
-                    'x-auth-token': token
-                }})
-                console.log(res)
+                const res = await axios.post("/"+type, entryData, { 
+                headers: {'x-auth-token': token} })
+                console.log(res.data)
             } catch(e){
                 console.log(e)
             }

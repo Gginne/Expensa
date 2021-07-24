@@ -35,7 +35,7 @@ class AuthController{
             } catch(err){
                 console.log(err)
                 return res.redirect("/")
-                //return res.status(400).json({message: "Unsuccessfully registered"})
+                
 
             }
         }
@@ -45,7 +45,6 @@ class AuthController{
 
     static async login(req, res){
         const {emailOrUsername, password} = req.body
-        //console.log(req.body)
         if (emailOrUsername && password) {
             //Get user from model
             const user = await User.where(`email='${emailOrUsername}' OR username='${emailOrUsername}'`)

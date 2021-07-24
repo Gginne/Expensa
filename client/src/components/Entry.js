@@ -25,6 +25,9 @@ class Entry extends Component {
     }
     saveEntry = e => {
         this.props.save(this.state)
+        if(this.state.id === null){
+            this.clearFields()
+        }
     }
     setEditState = () => {
         this.props.setEdit(this.state.id)
