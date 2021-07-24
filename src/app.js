@@ -19,7 +19,6 @@ const authRoutes = require('./routes/auth.routes')
 const expenseRoutes = require('./routes/expense.routes')
 
 //Routes
-
 app.use(authRoutes)
 app.use('/expenses', expenseRoutes)
 

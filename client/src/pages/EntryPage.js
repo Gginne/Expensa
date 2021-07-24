@@ -14,7 +14,7 @@ class EntryPage extends Component {
         return d.toISOString().split('T')[0] + ' ' + d.toTimeString().split(' ')[0];
     }
 
-    handleSubmit = entries => {
+    submitEntries = entries => {
         const {cookies} = this.props;
         const {token} = cookies.get('user')
         entries.forEach(async (entry) => {
@@ -41,7 +41,7 @@ class EntryPage extends Component {
         
                 <h2 class="mb-3">Add Entries</h2>
                 <div className="mt-4">
-                    <EntryTable submit={this.handleSubmit} />
+                    <EntryTable submit={this.submitEntries} />
                 </div>
             </div>
         </div>

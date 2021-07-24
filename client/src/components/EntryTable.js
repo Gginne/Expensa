@@ -34,7 +34,7 @@ class EntryTable extends Component {
     }
 
    
-    submitEntries = () => {
+    handleSubmit = () => {
         const {entries} = this.state
         this.props.submit(entries)
     }
@@ -57,7 +57,7 @@ class EntryTable extends Component {
                 </table>
                 {canSubmit && (
                     <div className="float-right p-2">
-                        <button className="btn btn-info" onClick={() => this.submitEntries()}>Submit</button>
+                        <button className="btn btn-info" onClick={() => this.handleSubmit()}>Submit</button>
                     </div>
                 )}  
             </div>

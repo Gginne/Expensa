@@ -1,17 +1,18 @@
 require("dotenv").config()
-const jwt = require("jsonwebtoken")
+const User = require("../models/User")
 
 module.exports = (req, res, next) => {
     const token = req.header("x-auth-token")
-    if(!token) return res.redirect(301, "/");
+    if(!token) return res.redirect(301, "/")
 
     try{
-        const decoded = jwt.verify(token, process.env.TOKEN_SECRET)
-        //console.log(decoded)
+        const decoded = jwt.verify(token, process.env.JWTSECRET)
         req.user = decoded
         next()
 
     } catch(e){
-        return res.redirect(301, "/")
+        res.redirect(301, "/")
     }
+
+    
 }
