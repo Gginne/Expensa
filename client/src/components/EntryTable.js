@@ -37,7 +37,7 @@ class EntryTable extends Component {
     handleSubmit = () => {
         const {entries} = this.state
         this.props.submit(entries)
-      
+        this.setState({entries: []})
     }
    
     render() {
