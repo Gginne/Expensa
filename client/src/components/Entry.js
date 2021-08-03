@@ -52,50 +52,51 @@ class Entry extends Component {
         const isFilled = Object.keys(data).some(key => Boolean(data[key]))
         const {type, amount, category, description, datetime} = data
         return (
-            <form className="row p-2">
-                <div className="col-xs-6 col-sm-4 col-md-2 mt-1">
+            <tr>
+                <td>
                     <select className="form-control" name="type" aria-label="Default select example" onChange={e => this.handleChange(e)} disabled={!edit}>
                         <option value="" selected={type === ""}  >Type</option>
                         <option value="expenses" selected={type === 'expenses'}>Expense</option>
                     </select>
-                </div>
-                <div className="col-xs-6 col-sm-4 col-md-2 mt-1">
+                </td>
+                <td>
                     <select className="form-control" name="category" aria-label="Default select example" onChange={e => this.handleChange(e)} disabled={!edit}>
                         <option value="" selected={category === ""} >Category</option>
                         <option value="food" selected={category === "food"} >Food</option>
                     </select>
-                </div>
-                <div className="col-xs-6 col-sm-4 col-md-1 mt-1">
+                </td>
+                <td >
                     <input type="number" className="form-control" onChange={e => this.handleChange(e)} value={amount} min={1}  name="amount" placeholder="Amount" disabled={!edit}/>
-                </div>
-                <div className="col-xs-6 col-sm-7 col-md-3 mt-1">
-                    <input type="datetime-local" className="form-control" onChange={e => this.handleChange(e)} value={datetime} name="datetime" placeholder="Date/Time" disabled={!edit}/>
-                </div>
-                <div className="col-xs-6 col-sm-5 col-md-2 mt-1">
+                </td>
+                <td>
                     <input type="text" className="form-control" onChange={e => this.handleChange(e)} value={description} name="description" placeholder="Description" disabled={!edit}/>
-                </div>
-                {edit ? (
-                    <div class="btn-group col-xs-6 col-sm-12 col-md-1 mt-2" role="group" aria-label="Entry Form Controls">
-                        <button class='btn btn-success' onClick={() => this.saveEntry()} disabled={isIncomplete} >
-                            <i class="fas fa-plus"></i>
-                        </button>
-                        <button class='btn' style={{backgroundColor: 'orange'}} onClick={() => this.clearFields()} disabled={!isFilled} >
-                            <i class="fas fa-eraser"></i>
-                        </button>
-                    </div>
-                ) : (
-                    <div class="btn-group col-xs-6 col-sm-12 col-md-1 mt-2" role="group" aria-label="Entry Edit Controls">
-                        <button class="btn btn-warning" onClick={() => this.setEditState()}>
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-danger" onClick={() => this.deleteEntry()}>
-                        <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                )}
+                </td>
+                <td>
+                    <input type="datetime-local" className="form-control" onChange={e => this.handleChange(e)} value={datetime} name="datetime" placeholder="Date/Time" disabled={!edit}/>
+                </td>
+                <td col="2">
+                    {edit ? (
+                        <div class="btn-group" role="group" aria-label="Entry Form Controls">
+                            <button class='btn btn-success' onClick={() => this.saveEntry()} disabled={isIncomplete} >
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class='btn' style={{backgroundColor: '#f48b44'}} onClick={() => this.clearFields()} disabled={!isFilled} >
+                                <i class="fas fa-eraser"></i>
+                            </button>
+                        </div>
+                    ) : (
+                        <div class="btn-group" role="group" aria-label="Entry Controls">
+                            <button class="btn btn-warning" onClick={() => this.setEditState()}>
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" onClick={() => this.deleteEntry()}>
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    )}
                    
-                
-            </form>
+                </td>
+            </tr>
         )
     }
 }
