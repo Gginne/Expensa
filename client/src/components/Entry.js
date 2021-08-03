@@ -68,21 +68,29 @@ class Entry extends Component {
                 <div className="col-xs-6 col-sm-4 col-md-1 mt-1">
                     <input type="number" className="form-control" onChange={e => this.handleChange(e)} value={amount} min={1}  name="amount" placeholder="Amount" disabled={!edit}/>
                 </div>
-                <div className="col-xs-6 col-sm-5 col-md-2 mt-1">
-                    <input type="text" className="form-control" onChange={e => this.handleChange(e)} value={description} name="description" placeholder="Description" disabled={!edit}/>
-                </div>
                 <div className="col-xs-6 col-sm-7 col-md-3 mt-1">
                     <input type="datetime-local" className="form-control" onChange={e => this.handleChange(e)} value={datetime} name="datetime" placeholder="Date/Time" disabled={!edit}/>
                 </div>
+                <div className="col-xs-6 col-sm-5 col-md-2 mt-1">
+                    <input type="text" className="form-control" onChange={e => this.handleChange(e)} value={description} name="description" placeholder="Description" disabled={!edit}/>
+                </div>
                 {edit ? (
                     <div class="btn-group col-xs-6 col-sm-12 col-md-1 mt-2" role="group" aria-label="Entry Form Controls">
-                        <button class={`btn btn-${id == null ? 'success' : 'info'}`} onClick={() => this.saveEntry()} disabled={isIncomplete} >{id == null ? 'Add' : 'Save'}</button>
-                        <button class={`btn btn-danger`} onClick={() => this.clearFields()} disabled={!isFilled} >Clear</button>
+                        <button class='btn btn-success' onClick={() => this.saveEntry()} disabled={isIncomplete} >
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class='btn' style={{backgroundColor: 'orange'}} onClick={() => this.clearFields()} disabled={!isFilled} >
+                            <i class="fas fa-eraser"></i>
+                        </button>
                     </div>
                 ) : (
                     <div class="btn-group col-xs-6 col-sm-12 col-md-1 mt-2" role="group" aria-label="Entry Edit Controls">
-                        <button class="btn btn-warning" onClick={() => this.setEditState()}>Edit</button>
-                        <button class="btn btn-danger" onClick={() => this.deleteEntry()}>Delete</button>
+                        <button class="btn btn-warning" onClick={() => this.setEditState()}>
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger" onClick={() => this.deleteEntry()}>
+                        <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                 )}
                    
