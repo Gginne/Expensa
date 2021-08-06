@@ -7,7 +7,7 @@ class Entry extends Component {
         data: {
             type: "",
             category: "",
-            amount: 0,
+            amount: "",
             description: "",
             datetime: ""
         }
@@ -39,7 +39,7 @@ class Entry extends Component {
         this.setState({data: {
             type: "",
             category: "",
-            amount: 0,
+            amount: "",
             description: "",
             datetime: ""
         }})

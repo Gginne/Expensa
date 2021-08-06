@@ -27,7 +27,7 @@ class App extends Component {
   handleAuth = token => {
     const {cookies} = this.props
     const user = {token}
-    cookies.set('user', user)
+    cookies.set('user', user, {path: '/', expires: new Date(Date.now()+3600*1000)})
     this.setState({isAuthenticated: true})
   }
 
