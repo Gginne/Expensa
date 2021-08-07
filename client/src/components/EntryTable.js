@@ -37,30 +37,52 @@ class EntryTable extends Component {
     handleSubmit = () => {
         const {entries} = this.state
         this.props.submit(entries)
-      
+        this.setState({entries: []})
     }
    
     render() {
         const {entries} = this.state
         const canSubmit = !entries.some(({edit}) => edit) && entries.length > 0
     
+        const expenseSum = entries.reduce((accum, {data}) => (data.type === "expenses" ? Number(data.amount) + accum : 0), 0)
+        
+        const incomeSum = entries.reduce((accum, {data}) => (data.type === "incomes" ? Number(data.amount) + accum : 0), 0)
         return (
             <div className="bg-white table-responsive shadow-sm rounded">
                 <table className="table">
-                    <tbody>
+                    <thead>
                         <Entry save={this.handleSave} setEdit={this.handleEdit} />
+                    </thead>
+                    <tbody>
+                        
                         {entries.map(entry => <Entry {...entry} key={entry.id} 
                                                      save={this.handleSave} 
                                                      setEdit={this.handleEdit} 
                                                      delete={this.handleDelete} /> 
                         )}              
                     </tbody>
+                    {canSubmit && (
+                        <tfoot>
+                            <tr>
+                                <td colSpan="4">
+                                    <div className="float-right">
+                                        <h6>Total Expenses </h6> <span class="badge badge-danger">${expenseSum}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>
+                                        <h6>Total Income </h6> <span class="badge badge-success">${incomeSum}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button className="btn btn-info btn-block" onClick={() => this.handleSubmit()}>Submit </button>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    )}  
+                    
                 </table>
-                {canSubmit && (
-                    <div className="float-right p-2">
-                        <button className="btn btn-info" onClick={() => this.handleSubmit()}>Submit</button>
-                    </div>
-                )}  
+                
             </div>
         )
     }

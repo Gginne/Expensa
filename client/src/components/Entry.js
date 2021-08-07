@@ -7,7 +7,7 @@ class Entry extends Component {
         data: {
             type: "",
             category: "",
-            amount: 0,
+            amount: "",
             description: "",
             datetime: ""
         }
@@ -39,7 +39,7 @@ class Entry extends Component {
         this.setState({data: {
             type: "",
             category: "",
-            amount: 0,
+            amount: "",
             description: "",
             datetime: ""
         }})
@@ -77,13 +77,21 @@ class Entry extends Component {
                 <td col="2">
                     {edit ? (
                         <div class="btn-group" role="group" aria-label="Entry Form Controls">
-                         <button class={`btn btn-${id == null ? 'success' : 'info'}`} onClick={() => this.saveEntry()} disabled={isIncomplete} >{id == null ? 'Add' : 'Save'}</button>
-                         <button class={`btn btn-danger`} onClick={() => this.clearFields()} disabled={!isFilled} >Clear</button>
+                            <button class='btn btn-success' onClick={() => this.saveEntry()} disabled={isIncomplete} >
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class='btn' style={{backgroundColor: '#f48b44'}} onClick={() => this.clearFields()} disabled={!isFilled} >
+                                <i class="fas fa-eraser"></i>
+                            </button>
                         </div>
                     ) : (
                         <div class="btn-group" role="group" aria-label="Entry Controls">
-                            <button type="button" class="btn btn-warning" onClick={() => this.setEditState()}>Edit</button>
-                            <button type="button" class="btn btn-danger" onClick={() => this.deleteEntry()}>Delete</button>
+                            <button class="btn btn-warning" onClick={() => this.setEditState()}>
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger" onClick={() => this.deleteEntry()}>
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
                     )}
                    
