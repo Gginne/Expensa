@@ -12,4 +12,4 @@ class Category extends Model {
 
 }
 
-module.exports = Expense
+module.exports = Category
