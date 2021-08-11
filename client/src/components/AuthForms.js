@@ -9,8 +9,6 @@ class AuthForms extends Component {
         }
     }
 
-    
-
     changeForm = formState => {
         this.setState({formState, formData: {}})
     }

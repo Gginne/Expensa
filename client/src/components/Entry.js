@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 class Entry extends Component {
+
     static defaultProps = {
         id: null,
         edit: true,
@@ -19,6 +20,8 @@ class Entry extends Component {
             data: this.props.data,
         }
     }
+
+   
     handleChange = e => {
         const data = {...this.state.data}
         this.setState({data: {...data, [e.target.name]: e.target.value}})
@@ -47,10 +50,11 @@ class Entry extends Component {
 
     render() {
         const {id, data} = this.state
-        const {edit} = this.props
+        const {edit, categories} = this.props
         const isIncomplete = Object.keys(data).some(key => !Boolean(data[key]))
         const isFilled = Object.keys(data).some(key => Boolean(data[key]))
         const {type, amount, category, description, datetime} = data
+      
         return (
             <tr>
                 <td>
@@ -60,9 +64,11 @@ class Entry extends Component {
                     </select>
                 </td>
                 <td>
-                    <select className="form-control" name="category" aria-label="Default select example" onChange={e => this.handleChange(e)} disabled={!edit}>
+                    <select className="form-control" name="category" aria-label="Default select example" onChange={e => this.handleChange(e)} disabled={!edit || type === ""}>
                         <option value="" selected={category === ""} >Category</option>
-                        <option value="food" selected={category === "food"} >Food</option>
+                        
+                        
+                    
                     </select>
                 </td>
                 <td >

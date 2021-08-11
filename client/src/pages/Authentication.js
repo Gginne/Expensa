@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import AuthForms from '../components/AuthForms'
-import { withCookies } from 'react-cookie';
+import AuthForms from "../components/AuthForms"
 import axios from 'axios'
 
 class Authentication extends Component {
@@ -45,4 +44,4 @@ class Authentication extends Component {
     }
 }
 
-export default withCookies(Authentication) 
+export default Authentication

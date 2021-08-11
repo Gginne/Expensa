@@ -2,46 +2,43 @@ import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import { withCookies, Cookies } from 'react-cookie';
-import { instanceOf } from 'prop-types';
 
+import Navigation from './components/Navigation';
 import Authentication from './pages/Authentication';
 import Dashboard from './pages/Dashboard';
 import EntryPage from './pages/EntryPage';
-import Navigation from './components/Navigation';
+
+import {AuthProvider} from "./context/AuthContext"
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies()
 
 class App extends Component {
-  static propTypes = {
-    cookies: instanceOf(Cookies).isRequired
-  };
 
   constructor(props) {
     super(props);
-
-    const { cookies } = props;
+    
     this.state = {
-      isAuthenticated: cookies.get('user') != null
+      isAuthenticated: Boolean(cookies.get('token'))
     };
   }
 
   handleAuth = token => {
-    const {cookies} = this.props
-    const user = {token}
-    cookies.set('user', user, {path: '/', expires: new Date(Date.now()+3600*1000)})
+    cookies.set('token', token)
     this.setState({isAuthenticated: true})
   }
 
   handleLogout = () => {
-    const {cookies} = this.props
   
-    cookies.remove('user')
+    cookies.remove('token')
     this.setState({isAuthenticated: false})
   }
 
 
   render() {
     const {isAuthenticated} = this.state
-    console.log(isAuthenticated)
+    
+    //console.log(cookies.get('token'))
     return (
       <Router>
         <div className="bg-light" style={{ height: '100vh'}}>
@@ -51,12 +48,12 @@ class App extends Component {
               {!isAuthenticated ? (
                 <Route path="/" component={props => <Authentication {...props} auth={this.handleAuth}/>} />
               ) : (
-                <>
+                <AuthProvider>
                   <Navigation logout={this.handleLogout}/>
                   <Route exact path="/" component={props => <Dashboard {...props}/>} />
                   <Route exact path="/dashboard" component={props => <Dashboard {...props}/>} />
                   <Route exact path="/new" component={props => <EntryPage {...props}/>} />
-                </>
+                </AuthProvider>
               )}
             </Switch>
           </div>
@@ -66,4 +63,4 @@ class App extends Component {
   }
 }
 
-export default withCookies(App) 
+export default App 

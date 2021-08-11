@@ -2,10 +2,11 @@ const db = require("../database/db")
 const Category = require("../models/Category")
 class CategoryController{
 
-    //POST - CRUD ROUTES
+    //GET - CRUD ROUTES
     static async index(req, res){ //Get all expense categories
         try{
             const expense = await Category.where(`type='0' AND public='1'`)
+        
             return res.status(200).json({expense})
         } catch(err){
             console.log(err)

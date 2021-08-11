@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import {withCookies} from 'react-cookie'
+import AuthContext from '../context/AuthContext'
 
 class Dashboard extends Component {
-  
-
+    static contextType = AuthContext
+    
     render() {
-        const {cookies} = this.props
-        console.log(cookies.get('user'))
+        const {token} = this.context
+        console.log(token)
         return (
             <div class="row">
                 <div class="col-12 mt-5">
@@ -18,4 +18,4 @@ class Dashboard extends Component {
         )
     }
 }
-export default withCookies(Dashboard)
+export default Dashboard

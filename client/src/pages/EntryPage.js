@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import EntryTable from '../components/EntryTable'
-import { withCookies, Cookies } from 'react-cookie';
-import { instanceOf } from 'prop-types';
 import axios from 'axios'
+import AuthContext from '../context/AuthContext'
 
 class EntryPage extends Component {
-    static propTypes = {
-        cookies: instanceOf(Cookies).isRequired
-    };
+    static contextType = AuthContext
+
+    constructor(props){
+        super(props)
+        this.state = {}
+    }
 
     toSQLDatetime = d => {
         d = new Date(d)
@@ -15,8 +17,8 @@ class EntryPage extends Component {
     }
 
     submitEntries = entries => {
-        const {cookies} = this.props;
-        const {token} = cookies.get('user')
+        const {token} = this.context
+        
         entries.forEach(async (entry) => {
             const {type, amount, description, datetime} = entry.data
             const entryData = { 
@@ -35,13 +37,17 @@ class EntryPage extends Component {
     }
 
     render() {
+        const {categories} = this.state
+        
+        console.log(categories)
+
         return (
         <div class="row">
             <div class="col-12 mt-5">
         
                 <h2 class="mb-3">Add Entries</h2>
                 <div className="mt-4">
-                    <EntryTable submit={this.submitEntries} />
+                    <EntryTable submit={this.submitEntries} categories={categories}/>
                 </div>
             </div>
         </div>
@@ -49,4 +55,4 @@ class EntryPage extends Component {
     }
 }
 
-export default withCookies(EntryPage)
+export default EntryPage
