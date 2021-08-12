@@ -49,7 +49,7 @@ class Entry extends Component {
     }
 
     render() {
-        const {id, data} = this.state
+        const {data} = this.state
         const {edit, categories} = this.props
         const isIncomplete = Object.keys(data).some(key => !Boolean(data[key]))
         const isFilled = Object.keys(data).some(key => Boolean(data[key]))
@@ -66,7 +66,7 @@ class Entry extends Component {
                 <td>
                     <select className="form-control" name="category" aria-label="Default select example" onChange={e => this.handleChange(e)} disabled={!edit || type === ""}>
                         <option value="" selected={category === ""} >Category</option>
-                        {type === "" || categories[type].map(option => (
+                        {type === "" ? type : categories[type].map(option => (
                             <option value={option} selected={category === option} >{option}</option>
                         ))}
                         

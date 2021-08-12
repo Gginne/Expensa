@@ -1,25 +1,18 @@
 import React, { Component } from 'react'
 import { v4 as uuid } from 'uuid';
-import AuthContext from '../context/AuthContext';
-import {getCategories} from "../helpers"
+
 import Entry from './Entry'
 
 class EntryTable extends Component {
-    static contextType = AuthContext
 
     constructor(){
         super()
         this.state = {
-            entries: [],
-            categories: []
+            entries: []
         }
     }
 
-    async componentDidMount(){
-        const {token} = this.context
-        const categories = await getCategories(token)
-        this.setState({categories})
-    }
+   
 
     handleSave = (newEntry) => {
         const {entries} = this.state
@@ -52,7 +45,8 @@ class EntryTable extends Component {
     }
    
     render() {
-        const {entries, categories} = this.state
+        const {entries} = this.state
+        const {categories} = this.props
 
         const canSubmit = !entries.some(({edit}) => edit) && entries.length > 0
     
@@ -65,6 +59,7 @@ class EntryTable extends Component {
                 <table className="table">
                     <thead>
                         <Entry save={this.handleSave} categories={categories} setEdit={this.handleEdit}/>
+                        
                     </thead>
                     <tbody>
                         

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import EntryTable from '../components/EntryTable'
 import axios from 'axios'
+import {getCategories} from "../helpers"
 import AuthContext from '../context/AuthContext'
 
 class EntryPage extends Component {
@@ -8,7 +9,14 @@ class EntryPage extends Component {
 
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = {
+            categories: []
+        }
+    }
+
+    async componentDidMount(){
+        const categories = await getCategories()
+        this.setState({categories})
     }
 
     toSQLDatetime = d => {
@@ -38,8 +46,6 @@ class EntryPage extends Component {
 
     render() {
         const {categories} = this.state
-        
-        console.log(categories)
 
         return (
         <div class="row">
