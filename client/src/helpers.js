@@ -1,16 +1,12 @@
 import axios from "axios"
-import Cookies from "universal-cookie"
 
-const cookies = new Cookies()
-
-export const getCategories = async () => {
+export const getCategories = async (token) => {
     try{
-        const token = cookies.get('token')
-        const res = await axios.get("/categories/", { 
+        const res = await axios.get("/categories", { 
             headers: {'x-auth-token': token} 
         })
         console.log(res)
-        const expenses = res.data.expense.map(exp => exp.cols.name)
+        const expenses = res.data.expense.map(({cols}) => ({name: cols.name, id:cols.id}))
         return {expenses}
     } catch(err){
         console.log(err)

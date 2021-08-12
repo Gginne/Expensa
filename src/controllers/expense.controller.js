@@ -27,10 +27,12 @@ class ExpenseController{
     
     //POST - CRUD ROUTES
     static async store(req, res){ //Create new expense entry from input data in db
-        const {amount, description, datetime} = req.body
+        const {amount, description, category_id, datetime} = req.body
+        
         if(amount && description){
+            
             try{
-                const expense = new Expense({amount, description, datetime, user_id: req.user.id})
+                const expense = new Expense({amount, description, datetime, category_id, user_id: req.user.id})
                 await expense.save()
                 res.status(200).json(expense.cols)
             } catch(err){

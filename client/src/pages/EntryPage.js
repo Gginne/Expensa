@@ -15,7 +15,8 @@ class EntryPage extends Component {
     }
 
     async componentDidMount(){
-        const categories = await getCategories()
+        const {token} = this.context
+        const categories = await getCategories(token)
         this.setState({categories})
     }
 
@@ -28,9 +29,10 @@ class EntryPage extends Component {
         const {token} = this.context
         
         entries.forEach(async (entry) => {
-            const {type, amount, description, datetime} = entry.data
+            const {type, amount, description, datetime, category} = entry.data
             const entryData = { 
                 amount: Number(amount), 
+                category_id: Number(category),
                 description, 
                 datetime: this.toSQLDatetime(datetime)
             }

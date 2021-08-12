@@ -66,8 +66,8 @@ class Entry extends Component {
                 <td>
                     <select className="form-control" name="category" aria-label="Default select example" onChange={e => this.handleChange(e)} disabled={!edit || type === ""}>
                         <option value="" selected={category === ""} >Category</option>
-                        {type === "" ? type : categories[type].map(option => (
-                            <option value={option} selected={category === option} >{option}</option>
+                        {type === "" ? type : categories[type].map(({name, id}) => (
+                            <option value={id} selected={category === id} >{name}</option>
                         ))}
                         
                     
