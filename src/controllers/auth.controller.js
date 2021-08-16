@@ -1,7 +1,6 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const db = require("../database/db")
-//const {generateKey} = require("../test/keys")
 const jwt = require("jsonwebtoken")
 class AuthController{
 
@@ -30,7 +29,7 @@ class AuthController{
                 await newUser.save()
                 //Send message and authentication key
                 const {id} = newUser.cols
-                const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
+                const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: (3*3600)+'s' });
                 return res.status(200).json({token})
             } catch(err){
                 console.log(err)

@@ -53,21 +53,21 @@ class Entry extends Component {
         const {edit, categories} = this.props
         const isIncomplete = Object.keys(data).some(key => !Boolean(data[key]))
         const isFilled = Object.keys(data).some(key => Boolean(data[key]))
-        const {type, amount, category, description, datetime} = data
-        
+        const {type, amount, description, category, datetime} = data
+        console.log(category)
         return (
             <tr>
                 <td>
                     <select className="form-control" name="type" aria-label="Default select example" onChange={e => this.handleChange(e)} disabled={!edit}>
-                        <option value="" selected={type === ""}  >Type</option>
+                        <option value="" selected={type === ''}>Type</option>
                         <option value="expenses" selected={type === 'expenses'}>Expense</option>
                     </select>
                 </td>
                 <td>
                     <select className="form-control" name="category" aria-label="Default select example" onChange={e => this.handleChange(e)} disabled={!edit || type === ""}>
-                        <option value="" selected={category === ""} >Category</option>
+                        <option value="">Category</option>
                         {type === "" ? type : categories[type].map(({name, id}) => (
-                            <option value={id} selected={category === id} >{name}</option>
+                            <option key={id} value={id} selected={category === String(id)}>{name}</option>
                         ))}
                         
                     

@@ -7,7 +7,7 @@ class Authentication extends Component {
 
     handleLogin = async (data) => {
         try{
-            const response = await axios.post("/login", data)
+            const response = await axios.post("/api/login", data)
             const{token} = response.data
         
             this.props.auth(token)
@@ -21,7 +21,7 @@ class Authentication extends Component {
 
     handleRegister = async (data) => {
         try{
-            const response = await axios.post("/register", data)
+            const response = await axios.post("/api/register", data)
             const{token} = response.data
         
             this.props.auth(token)

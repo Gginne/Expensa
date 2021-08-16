@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
-import AuthContext from '../context/AuthContext'
 
 class Dashboard extends Component {
-    static contextType = AuthContext
     
     render() {
-        const {token} = this.context
-        console.log(token)
         return (
             <div class="row">
                 <div class="col-12 mt-5">

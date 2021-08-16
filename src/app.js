@@ -20,9 +20,11 @@ const expenseRoutes = require('./routes/expense.routes')
 const categoryRoutes = require('./routes/category.routes')
 
 //Routes
-app.use(authRoutes)
-app.use('/expenses', expenseRoutes)
-app.use('/categories', categoryRoutes)
+const router = express.Router()
+
+app.use('/api', authRoutes)
+app.use('/api/expenses', expenseRoutes)
+app.use('/api/categories', categoryRoutes)
 
 
 //Export App

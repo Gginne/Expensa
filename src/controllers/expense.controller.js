@@ -30,7 +30,6 @@ class ExpenseController{
         const {amount, description, category_id, datetime} = req.body
         
         if(amount && description){
-            
             try{
                 const expense = new Expense({amount, description, datetime, category_id, user_id: req.user.id})
                 await expense.save()

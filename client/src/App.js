@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
-import Navigation from './components/Navigation';
+
 import Authentication from './pages/Authentication';
 import Dashboard from './pages/Dashboard';
 import EntryPage from './pages/EntryPage';
@@ -19,17 +19,16 @@ class App extends Component {
     super(props);
     
     this.state = {
-      isAuthenticated: Boolean(cookies.get('token'))
+      isAuthenticated: false
     };
   }
 
   handleAuth = token => {
-    cookies.set('token', token)
+    cookies.set('token', token, {path: '/', expires: new Date(Date.now() + 3 * 3600 * 1000)})
     this.setState({isAuthenticated: true})
   }
 
   handleLogout = () => {
-  
     cookies.remove('token')
     this.setState({isAuthenticated: false})
   }
@@ -48,8 +47,7 @@ class App extends Component {
               {!isAuthenticated ? (
                 <Route path="/" component={props => <Authentication {...props} auth={this.handleAuth}/>} />
               ) : (
-                <AuthProvider>
-                  <Navigation logout={this.handleLogout}/>
+                <AuthProvider logout={() => this.handleLogout()}>
                   <Route exact path="/" component={props => <Dashboard {...props}/>} />
                   <Route exact path="/dashboard" component={props => <Dashboard {...props}/>} />
                   <Route exact path="/new" component={props => <EntryPage {...props}/>} />
