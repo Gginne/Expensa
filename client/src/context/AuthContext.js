@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import Cookies from 'universal-cookie';
-import Navigation from '../components/Navigation';
 
+import Navigation from '../components/Navigation';
+import Cookies from 'universal-cookie';
 const AuthContext = React.createContext()
 const cookies = new Cookies();
 
@@ -11,28 +11,15 @@ class AuthProvider extends Component {
     state = {
       token: cookies.get('token')
     }
-
-    componentDidUpdate(){
-      //console.log(cookies.get('token'))
-      if(!cookies.get('token')){
-        this.props.logout()
-      }
-    }
     
-    // Method to update state
-    setToken = (token) => {
-      this.setState({token})
-    }
   
     render() {
       const { children, logout } = this.props
       const { token } = this.state
-      const { setToken } = this
       return (
         <AuthContext.Provider
           value={{
             token,
-            setToken,
           }}
         >
             <Navigation logout={logout}/>

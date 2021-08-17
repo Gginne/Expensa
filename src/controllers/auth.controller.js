@@ -29,8 +29,13 @@ class AuthController{
                 await newUser.save()
                 //Send message and authentication key
                 const {id} = newUser.cols
-                const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: (3*3600)+'s' });
-                return res.status(200).json({token})
+
+                const refreshToken = jwt.sign({email, username, id}, process.env.REFRESH_SECRET, { expiresIn: 12*3600+'s' });
+                const accessToken = jwt.sign({email, username, id}, process.env.ACCESS_SECRET, { expiresIn: 0.5*3600+'s' });
+
+                res.cookie('refresh_token', refreshToken, { expires: new Date(Date.now() + 12*3600*1000), httpOnly: true, secure: true });
+
+                return res.status(200).json({token: accessToken})
             } catch(err){
                 console.log(err)
                 return res.redirect("/")
@@ -38,7 +43,6 @@ class AuthController{
 
             }
         }
-        
 
     }
 
@@ -52,8 +56,13 @@ class AuthController{
             if(user && bcryptPassword){
                 //Send message and authentication key
                 const {email, username, id} = user.cols
-                const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
-                return res.status(200).json({token})
+
+                const refreshToken = jwt.sign({email, username, id}, process.env.REFRESH_SECRET, { expiresIn: 12*3600+'s' });
+                const accessToken = jwt.sign({email, username, id}, process.env.ACCESS_SECRET, { expiresIn: 0.5*3600+'s' });
+
+                res.cookie('refresh_token', refreshToken, { expires: new Date(Date.now() + 900000), httpOnly: true, secure: true });
+
+                return res.status(200).json({token: accessToken})
             } else {
                 return res.status(400).json({message: 'Invalid Username/email or password'})
             }
