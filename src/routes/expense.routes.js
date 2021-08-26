@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 const ExpenseController = require("../controllers/expense.controller")
 
-const isLoggedIn = require("../middleware/isLoggedIn")
+const authenticate = require("../middleware/authenticate")
 
 
 router.route("/")
-      .post(isLoggedIn, ExpenseController.store)
+      .post(authenticate, ExpenseController.store)
       
 
 

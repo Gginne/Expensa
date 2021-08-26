@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 const CategoryController = require("../controllers/category.controller")
 
-const isLoggedIn = require("../middleware/isLoggedIn")
+const authenticate = require("../middleware/authenticate")
 
 router.route("/")
-      .get(isLoggedIn, CategoryController.index)
+      .get(authenticate, CategoryController.index)
       
 
 

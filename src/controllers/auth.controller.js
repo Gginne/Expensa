@@ -1,11 +1,25 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const db = require("../database/db")
-//const {generateKey} = require("../test/keys")
 const jwt = require("jsonwebtoken")
+
 class AuthController{
 
-    static async register(req, res){
+    static generateTokens = (user) => {
+        const { 
+            REFRESH_SECRET, 
+            ACCESS_SECRET, 
+            REFRESH_EXPIRATION, 
+            ACCESS_EXPIRATION 
+        } = process.env
+
+        const refreshToken = jwt.sign(user, REFRESH_SECRET, { expiresIn: REFRESH_EXPIRATION+'s' });
+        const accessToken = jwt.sign(user,  ACCESS_SECRET, { expiresIn: ACCESS_EXPIRATION+'s' });
+
+        return {refreshToken, accessToken}
+    }
+
+    static register = async (req, res) =>{
         //Create new user in database
         let {email, username, password, password2} = req.body
 
@@ -30,8 +44,14 @@ class AuthController{
                 await newUser.save()
                 //Send message and authentication key
                 const {id} = newUser.cols
-                const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
-                return res.status(200).json({token})
+                const {refreshToken, accessToken} = this.generateTokens({email, username, id})
+                
+                res.cookie('refresh_token', refreshToken, {
+                    expires: new Date(Date.now() + Number(process.env.REFRESH_EXPIRATION)*1000), 
+                    httpOnly: true, secure: true 
+                });
+
+                return res.status(200).json({token: accessToken})
             } catch(err){
                 console.log(err)
                 return res.redirect("/")
@@ -39,11 +59,10 @@ class AuthController{
 
             }
         }
-        
 
     }
 
-    static async login(req, res){
+    static login = async (req, res) => {
         const {emailOrUsername, password} = req.body
         if (emailOrUsername && password) {
             //Get user from model
@@ -53,8 +72,15 @@ class AuthController{
             if(user && bcryptPassword){
                 //Send message and authentication key
                 const {email, username, id} = user.cols
-                const token = jwt.sign({email, username, id}, process.env.TOKEN_SECRET, { expiresIn: '3600s' });
-                return res.status(200).json({token})
+
+                const {refreshToken, accessToken} = this.generateTokens({email, username, id})
+
+                res.cookie('refresh_token', refreshToken, {
+                    expires: new Date(Date.now() + Number(process.env.REFRESH_EXPIRATION)*1000), 
+                    httpOnly: true, secure: true 
+                });
+
+                return res.status(200).json({token: accessToken})
             } else {
                 return res.status(400).json({message: 'Invalid Username/email or password'})
             }
@@ -65,8 +91,9 @@ class AuthController{
     }
 
     static logout(req, res){
-        req.session.destroy();
-        res.redirect("/auth")
+        console.log("logging out...")
+        res.clearCookie('refresh_token')
+        res.status(200).json({auth: false, message: "Logged out"})
     }
 
 

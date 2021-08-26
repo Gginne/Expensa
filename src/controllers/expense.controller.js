@@ -5,16 +5,16 @@ class ExpenseController{
 
     //GET - CRUD ROUTES
 
-    static index(req, res){ //Show all memebers of the model
+    static index = async (req, res) => { //Show all memebers of the model
 
     }
 
-    static create(req, res){ //Go to expense creation form
+    static create = async (req, res) =>{ //Go to expense creation form
         //const {amout, descriprition} = req.body
         console.log(req.body)
     }
 
-    static edit(req, res){ //Go to edit page form
+    static edit = async (req, res) => { //Go to edit page form
 
     }
 
@@ -26,11 +26,10 @@ class ExpenseController{
 
     
     //POST - CRUD ROUTES
-    static async store(req, res){ //Create new expense entry from input data in db
+    static store = async (req, res) => { //Create new expense entry from input data in db
         const {amount, description, category_id, datetime} = req.body
         
         if(amount && description){
-            
             try{
                 const expense = new Expense({amount, description, datetime, category_id, user_id: req.user.id})
                 await expense.save()

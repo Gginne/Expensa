@@ -1,9 +1,10 @@
 const db = require("../database/db")
 const Category = require("../models/Category")
+
 class CategoryController{
 
     //GET - CRUD ROUTES
-    static async index(req, res){ //Get all expense categories
+    static index = async (req, res) => { //Get all expense categories
         try{
             const expense = await Category.where(`type='0' AND public='1'`)
         

@@ -5,11 +5,7 @@ import  { Redirect } from 'react-router-dom'
 
 const Navigation = (props) => {
 
-    const handleLogout = () => {
-      props.logout()
-      return <Redirect to='/' />
-    }
-
+  
     return(
       <div class="shadow rounded">
         <Navbar bg="white" expand="lg">
@@ -23,7 +19,7 @@ const Navigation = (props) => {
                 <NavDropdown.Item href="#action/3.4">Category</NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Button variant="danger" onClick={() => handleLogout()}>Logout</Button>
+            <Button variant="danger" onClick={() => <Redirect to="/logout" />}>Logout</Button>
           </Navbar.Collapse>
         </Navbar>
       </div>

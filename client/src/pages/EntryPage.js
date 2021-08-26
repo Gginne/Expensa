@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import EntryTable from '../components/EntryTable'
-import axios from 'axios'
-import {getCategories} from "../helpers"
+import apiClient from '../helpers/apiClient'
+import {getCategories} from "../helpers/functions"
 import AuthContext from '../context/AuthContext'
+
 
 class EntryPage extends Component {
     static contextType = AuthContext
@@ -15,8 +16,7 @@ class EntryPage extends Component {
     }
 
     async componentDidMount(){
-        const {token} = this.context
-        const categories = await getCategories(token)
+        const categories = await getCategories()
         this.setState({categories})
     }
 
@@ -26,7 +26,6 @@ class EntryPage extends Component {
     }
 
     submitEntries = entries => {
-        const {token} = this.context
         
         entries.forEach(async (entry) => {
             const {type, amount, description, datetime, category} = entry.data
@@ -37,8 +36,7 @@ class EntryPage extends Component {
                 datetime: this.toSQLDatetime(datetime)
             }
             try{
-                const res = await axios.post("/"+type, entryData, { 
-                headers: {'x-auth-token': token} })
+                const res = await apiClient.post("/api/"+type, entryData)
                 console.log(res.data)
             } catch(e){
                 console.log(e)

@@ -3,15 +3,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
-import Navigation from './components/Navigation';
+
 import Authentication from './pages/Authentication';
 import Dashboard from './pages/Dashboard';
 import EntryPage from './pages/EntryPage';
+import Logout from './components/Logout';
 
 import {AuthProvider} from "./context/AuthContext"
-import Cookies from 'universal-cookie';
 
-const cookies = new Cookies()
 
 class App extends Component {
 
@@ -19,18 +18,17 @@ class App extends Component {
     super(props);
     
     this.state = {
-      isAuthenticated: Boolean(cookies.get('token'))
+      isAuthenticated: Boolean(localStorage.getItem('token'))
     };
   }
 
   handleAuth = token => {
-    cookies.set('token', token)
+    localStorage.setItem('token', token);
     this.setState({isAuthenticated: true})
   }
 
   handleLogout = () => {
-  
-    cookies.remove('token')
+    localStorage.removeItem('token');
     this.setState({isAuthenticated: false})
   }
 
@@ -49,10 +47,10 @@ class App extends Component {
                 <Route path="/" component={props => <Authentication {...props} auth={this.handleAuth}/>} />
               ) : (
                 <AuthProvider>
-                  <Navigation logout={this.handleLogout}/>
                   <Route exact path="/" component={props => <Dashboard {...props}/>} />
                   <Route exact path="/dashboard" component={props => <Dashboard {...props}/>} />
                   <Route exact path="/new" component={props => <EntryPage {...props}/>} />
+                  <Route exact path="/logout" component={props => <Logout {...props} logout={this.handleLogout}/>} />
                 </AuthProvider>
               )}
             </Switch>

@@ -1,34 +1,26 @@
 import React, {Component} from 'react'
-import Cookies from 'universal-cookie';
 
+import Navigation from '../components/Navigation';
 const AuthContext = React.createContext()
-const cookies = new Cookies();
 
 class AuthProvider extends Component {
     // Context state
     
     state = {
-      token: cookies.get('token')
+      token: localStorage.getItem('token')
     }
     
-    // Method to update state
-    setToken = (token) => {
-      this.setState({token})
-    }
   
     render() {
-      const { children } = this.props
+      const { children} = this.props
       const { token } = this.state
-      const { setToken } = this
-      console.log(token)
       return (
         <AuthContext.Provider
           value={{
             token,
-            setToken,
           }}
         >
-            
+            <Navigation/>
             {children}
         
           
