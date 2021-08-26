@@ -91,8 +91,9 @@ class AuthController{
     }
 
     static logout(req, res){
-        req.session.destroy();
-        res.redirect("/auth")
+        console.log("logging out...")
+        res.clearCookie('refresh_token')
+        res.status(200).json({auth: false, message: "Logged out"})
     }
 
 
