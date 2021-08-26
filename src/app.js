@@ -5,8 +5,6 @@ const cors = require("cors")
 const cookieParser = require('cookie-parser')
 
 
-const isLoggedIn = require('./middleware/isLoggedIn')
-
 //App Setup
 const app = express()
 app.set('port', process.env.PORT || 5000)

@@ -2,9 +2,24 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const db = require("../database/db")
 const jwt = require("jsonwebtoken")
+
 class AuthController{
 
-    static async register(req, res){
+    static generateTokens = (user) => {
+        const { 
+            REFRESH_SECRET, 
+            ACCESS_SECRET, 
+            REFRESH_EXPIRATION, 
+            ACCESS_EXPIRATION 
+        } = process.env
+
+        const refreshToken = jwt.sign(user, REFRESH_SECRET, { expiresIn: REFRESH_EXPIRATION+'s' });
+        const accessToken = jwt.sign(user,  ACCESS_SECRET, { expiresIn: ACCESS_EXPIRATION+'s' });
+
+        return {refreshToken, accessToken}
+    }
+
+    static register = async (req, res) =>{
         //Create new user in database
         let {email, username, password, password2} = req.body
 
@@ -29,11 +44,12 @@ class AuthController{
                 await newUser.save()
                 //Send message and authentication key
                 const {id} = newUser.cols
-
-                const refreshToken = jwt.sign({email, username, id}, process.env.REFRESH_SECRET, { expiresIn: 12*3600+'s' });
-                const accessToken = jwt.sign({email, username, id}, process.env.ACCESS_SECRET, { expiresIn: 0.5*3600+'s' });
-
-                res.cookie('refresh_token', refreshToken, { expires: new Date(Date.now() + 12*3600*1000), httpOnly: true, secure: true });
+                const {refreshToken, accessToken} = this.generateTokens({email, username, id})
+                
+                res.cookie('refresh_token', refreshToken, {
+                    expires: new Date(Date.now() + Number(process.env.REFRESH_EXPIRATION)*1000), 
+                    httpOnly: true, secure: true 
+                });
 
                 return res.status(200).json({token: accessToken})
             } catch(err){
@@ -46,7 +62,7 @@ class AuthController{
 
     }
 
-    static async login(req, res){
+    static login = async (req, res) => {
         const {emailOrUsername, password} = req.body
         if (emailOrUsername && password) {
             //Get user from model
@@ -57,10 +73,12 @@ class AuthController{
                 //Send message and authentication key
                 const {email, username, id} = user.cols
 
-                const refreshToken = jwt.sign({email, username, id}, process.env.REFRESH_SECRET, { expiresIn: 12*3600+'s' });
-                const accessToken = jwt.sign({email, username, id}, process.env.ACCESS_SECRET, { expiresIn: 0.5*3600+'s' });
+                const {refreshToken, accessToken} = this.generateTokens({email, username, id})
 
-                res.cookie('refresh_token', refreshToken, { expires: new Date(Date.now() + 900000), httpOnly: true, secure: true });
+                res.cookie('refresh_token', refreshToken, {
+                    expires: new Date(Date.now() + Number(process.env.REFRESH_EXPIRATION)*1000), 
+                    httpOnly: true, secure: true 
+                });
 
                 return res.status(200).json({token: accessToken})
             } else {

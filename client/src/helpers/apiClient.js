@@ -1,18 +1,34 @@
 import axios from 'axios'
-import Cookies from 'universal-cookie';
 
-const cookies = new Cookies()
 const apiClient = axios.create();
 
-apiClient.interceptors.request.use(async (config) => {
-   const token = cookies.get('token')
-   console.log(token)
-   config.headers = {  
+apiClient.interceptors.request.use((req) => {
+   const token = localStorage.getItem('token');
+   //console.log(token)
+   req.headers = {  
     'x-auth-token': token
   }
-  return config
+  return req
   }, (err) => {
-     console.log("error in getting ",err)
+     console.log(err)
 });
+
+apiClient.interceptors.response.use((res) => {
+   
+   return res;
+ }, (err) => {
+   
+   if(err.response.status === 400){
+      const {data, config} = err.response
+      localStorage.setItem('token', data.token)
+      console.log("refreshed")
+
+      return apiClient(config)
+
+   }
+   
+   console.log(err)
+   
+ });
 
 export default apiClient

@@ -9,9 +9,7 @@ import Dashboard from './pages/Dashboard';
 import EntryPage from './pages/EntryPage';
 
 import {AuthProvider} from "./context/AuthContext"
-import Cookies from 'universal-cookie';
 
-const cookies = new Cookies()
 
 class App extends Component {
 
@@ -19,17 +17,17 @@ class App extends Component {
     super(props);
     
     this.state = {
-      isAuthenticated: Boolean(cookies.get('token'))
+      isAuthenticated: Boolean(localStorage.getItem('token'))
     };
   }
 
   handleAuth = token => {
-    cookies.set('token', token)
+    localStorage.setItem('token', token);
     this.setState({isAuthenticated: true})
   }
 
   handleLogout = () => {
-    cookies.remove('token')
+    localStorage.removeItem('token');
     this.setState({isAuthenticated: false})
   }
 

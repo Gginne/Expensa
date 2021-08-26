@@ -1,15 +1,13 @@
 import React, {Component} from 'react'
 
 import Navigation from '../components/Navigation';
-import Cookies from 'universal-cookie';
 const AuthContext = React.createContext()
-const cookies = new Cookies();
 
 class AuthProvider extends Component {
     // Context state
     
     state = {
-      token: cookies.get('token')
+      token: localStorage.getItem('token')
     }
     
   
