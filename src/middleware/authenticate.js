@@ -15,7 +15,7 @@ module.exports = async(req, res, next) => {
         dRefresh = await jwt.verify(refreshToken, process.env.REFRESH_SECRET)
     } catch(e){
         //Refresh token has expired
-        return res.status(400).json({auth: false, message: "Refresh token has expired"})
+        return res.status(401).json({auth: false, message: "Refresh token has expired"})
     }
 
     if(User.find(dRefresh.id)){

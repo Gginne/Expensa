@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Redirect } from 'react-router';
 
 const apiClient = axios.create();
 
@@ -25,6 +26,9 @@ apiClient.interceptors.response.use((res) => {
 
       return apiClient(config)
 
+   } else if(err.response.status === 401){
+      const {auth} = err.response
+      if(!auth) return <Redirect to="/logout" />
    }
    
    console.log(err)
