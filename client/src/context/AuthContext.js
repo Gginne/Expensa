@@ -12,7 +12,7 @@ class AuthProvider extends Component {
     
   
     render() {
-      const { children, logout } = this.props
+      const { children} = this.props
       const { token } = this.state
       return (
         <AuthContext.Provider
@@ -20,7 +20,7 @@ class AuthProvider extends Component {
             token,
           }}
         >
-            <Navigation logout={logout}/>
+            <Navigation/>
             {children}
         
           
