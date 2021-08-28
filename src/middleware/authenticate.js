@@ -15,7 +15,7 @@ module.exports = async(req, res, next) => {
         dRefresh = await jwt.verify(refreshToken, process.env.REFRESH_SECRET)
     } catch(e){
         //Refresh token has expired
-        return res.status(401).json({auth: false, message: "Refresh token has expired"})
+        return res.status(400).json({auth: false, message: "Refresh token has expired"})
     }
 
     if(User.find(dRefresh.id)){
@@ -28,25 +28,16 @@ module.exports = async(req, res, next) => {
                 next()
             } else {
                 //Tokens don't match
-                return res.status(401).json({auth: false, message: "Tokens don't match"})
+                return res.status(400).json({auth: false, message: "Tokens don't match"})
             }
         } catch(e){
-            //Access token has expired
-            console.log("access token expired")
-            console.log("refreshing...")
             
-            const {refreshToken, accessToken } = AuthController.generateTokens({username, email, id})
-            res.cookie('refresh_token', refreshToken, {
-                expires: new Date(Date.now() + Number(process.env.REFRESH_EXPIRATION)*1000), 
-                httpOnly: true, secure: true 
-            });
-            
-            res.status(400).json({token: accessToken})
+            return res.status(401).json({auth: false, message: "Access token has expired"})
         }
         
     } else {
         //User does not exist
-        return res.status(401).json({auth: false, message: "User does not exist or was deleted"})
+        return res.status(400).json({auth: false, message: "User does not exist or was deleted"})
     }
 
     

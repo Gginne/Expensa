@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import  { Redirect } from 'react-router-dom'
 import apiClient from '../helpers/apiClient'
 
 class Logout extends Component {
  
     componentDidMount(){
-        apiClient("/logout")
+        apiClient.post("/api/logout")
+      
         this.props.logout()
-        return <Redirect to="/" />
-        
+
+        this.props.history.push("/")
     }
     render() {
         return (

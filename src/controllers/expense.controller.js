@@ -27,20 +27,23 @@ class ExpenseController{
     
     //POST - CRUD ROUTES
     static store = async (req, res) => { //Create new expense entry from input data in db
-        const {amount, description, category_id, datetime} = req.body
-        
-        if(amount && description){
-            try{
-                const expense = new Expense({amount, description, datetime, category_id, user_id: req.user.id})
-                await expense.save()
-                res.status(200).json(expense.cols)
-            } catch(err){
-                return res.status(400).json({message: "Error creating expense "})
+        const {expenses} = req.body
+        expenses.forEach(async (expense) => {
+            const {amount, description, category_id, datetime} = expense
+            if(amount && description){
+                try{
+                    const expense = new Expense({amount, description, datetime, category_id, user_id: req.user.id})
+                    await expense.save()
+                    res.status(200).json(expense.cols)
+                } catch(err){
+                    return res.status(400).json({message: "Error creating expense"})
+                }
+                
+            } else {
+                return res.status(400).json({message: "Missing required fields"})
             }
-            
-        } else {
-            return res.status(400).json({message: "Missing required fields "})
-        }
+        })
+        
     }
 
     static async update(req, res){ //Update expense data in db

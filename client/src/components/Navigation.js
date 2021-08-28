@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import {Navbar, Nav, NavDropdown, Button} from 'react-bootstrap'
-import  { Redirect } from 'react-router-dom'
+import {Navbar, Nav, NavDropdown} from 'react-bootstrap'
+
 
 const Navigation = (props) => {
 
@@ -19,7 +19,7 @@ const Navigation = (props) => {
                 <NavDropdown.Item href="#action/3.4">Category</NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Button variant="danger" onClick={() => <Redirect to="/logout" />}>Logout</Button>
+            <Link to="/logout" className="btn btn-danger">Logout</Link>
           </Navbar.Collapse>
         </Navbar>
       </div>
