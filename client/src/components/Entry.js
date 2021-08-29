@@ -54,7 +54,7 @@ class Entry extends Component {
         const isIncomplete = Object.keys(data).some(key => !Boolean(data[key]))
         const isFilled = Object.keys(data).some(key => Boolean(data[key]))
         const {type, amount, description, category, datetime} = data
-        console.log(category)
+        //console.log(category)
         return (
             <tr>
                 <td>
