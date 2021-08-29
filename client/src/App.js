@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Authentication from './pages/Authentication';
 import Dashboard from './pages/Dashboard';
 import EntryPage from './pages/EntryPage';
+import Expenses from './pages/Expenses'
 import Logout from './components/Logout';
 
 import {AuthProvider} from "./context/AuthContext"
@@ -50,6 +51,7 @@ class App extends Component {
                 <AuthProvider>
                   <Route exact path="/" component={props => <Dashboard {...props}/>} />
                   <Route exact path="/dashboard" component={props => <Dashboard {...props}/>} />
+                  <Route exact path="/expenses" component={props => <Expenses {...props}/>} />
                   <Route exact path="/new" component={props => <EntryPage {...props}/>} />
                   <Route exact path="/logout" component={props => <Logout {...props} logout={this.handleLogout} />} />
                 </AuthProvider>
