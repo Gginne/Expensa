@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import EntryTable from '../components/EntryTable'
 import apiClient from '../helpers/apiClient'
-import {getCategories} from "../helpers/functions"
+import {getCategories} from "../helpers/utils"
 import AuthContext from '../context/AuthContext'
 
 
@@ -25,23 +25,24 @@ class EntryPage extends Component {
         return d.toISOString().split('T')[0] + ' ' + d.toTimeString().split(' ')[0];
     }
 
-    submitEntries = entries => {
+    submitEntries = async (entries) => {
+       
+            let expenses = []
+            entries.forEach((entry) => {
+                const {type, amount, description, datetime, category} = entry.data
+                const entryData = { 
+                    amount: Number(amount), 
+                    category_id: Number(category),
+                    description, 
+                    datetime: this.toSQLDatetime(datetime)
+                }
+                
+                if(type === "expenses") expenses.push(entryData);   
+            });
+    
+            const res = await apiClient.post("/api/expenses", {expenses})
+            console.log(res.data)
         
-        entries.forEach(async (entry) => {
-            const {type, amount, description, datetime, category} = entry.data
-            const entryData = { 
-                amount: Number(amount), 
-                category_id: Number(category),
-                description, 
-                datetime: this.toSQLDatetime(datetime)
-            }
-            try{
-                const res = await apiClient.post("/api/"+type, entryData)
-                console.log(res.data)
-            } catch(e){
-                console.log(e)
-            }
-        });
     }
 
     render() {

@@ -5,34 +5,41 @@ const apiClient = axios.create();
 
 apiClient.interceptors.request.use((req) => {
    const token = localStorage.getItem('token');
-   //console.log(token)
+   
    req.headers = {  
     'x-auth-token': token
   }
+  
   return req
   }, (err) => {
-     console.log(err)
+   console.log(err)
+   Promise.reject(err)
 });
 
 apiClient.interceptors.response.use((res) => {
    
    return res;
- }, (err) => {
+ }, async (err) => {
    
-   if(err.response.status === 400){
-      const {data, config} = err.response
-      localStorage.setItem('token', data.token)
-      console.log("refreshed")
+   if(err.response.status === 401){
 
-      return apiClient(config)
-
-   } else if(err.response.status === 401){
-      const {auth} = err.response
-      if(!auth) return <Redirect to="/logout" />
-   }
+      try{
+         const refresh = await axios.get("/api/refresh")
+         localStorage.setItem('token', refresh.data.token)
+         
+         console.log("refreshing...")
+         err.response.config.data = JSON.parse(err.response.config.data)
+      
+         return apiClient(err.response.config)
+      }catch(e){
+         console.log(e)
+      }
+      
+   } 
    
    console.log(err)
-   
+   Promise.reject(err)
+   return <Redirect to="/logout" />
  });
 
 export default apiClient
