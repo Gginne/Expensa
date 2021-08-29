@@ -5,12 +5,11 @@ const apiClient = axios.create();
 
 apiClient.interceptors.request.use((req) => {
    const token = localStorage.getItem('token');
-   console.log(token)
    
    req.headers = {  
     'x-auth-token': token
   }
-  console.log(req)
+  
   return req
   }, (err) => {
    console.log(err)
@@ -25,11 +24,12 @@ apiClient.interceptors.response.use((res) => {
    if(err.response.status === 401){
 
       try{
-         const {data} = await axios.get("/api/refresh")
-         localStorage.setItem('token', data.token)
-         console.log(err.response.config.data)
+         const refresh = await axios.get("/api/refresh")
+         localStorage.setItem('token', refresh.data.token)
+         
+         console.log("refreshing...")
          err.response.config.data = JSON.parse(err.response.config.data)
-         console.log(err.response.config.data)
+      
          return apiClient(err.response.config)
       }catch(e){
          console.log(e)

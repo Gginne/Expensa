@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import EntryTable from '../components/EntryTable'
 import apiClient from '../helpers/apiClient'
-import {getCategories} from "../helpers/functions"
+import {getCategories} from "../helpers/utils"
 import AuthContext from '../context/AuthContext'
 
 
