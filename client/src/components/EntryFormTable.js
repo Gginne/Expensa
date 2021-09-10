@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 import Entry from './Entry'
 
-class EntryTable extends Component {
+class EntryFormTable extends Component {
 
     constructor(){
         super()
@@ -97,4 +97,4 @@ class EntryTable extends Component {
     }
 }
 
-export default EntryTable
+export default EntryFormTable

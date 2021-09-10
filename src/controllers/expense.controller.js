@@ -6,7 +6,14 @@ class ExpenseController{
     //GET - CRUD ROUTES
 
     static index = async (req, res) => { //Show all memebers of the model
-
+        try{
+            const expense = await Expense.where(`user_id=${req.user.id}`)
+        
+            return res.status(200).json({expense})
+        } catch(err){
+            console.log(err)
+            return res.status(400).json({message: 'error'})
+        }
     }
 
     static create = async (req, res) =>{ //Go to expense creation form

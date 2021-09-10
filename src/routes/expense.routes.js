@@ -6,6 +6,7 @@ const authenticate = require("../middleware/authenticate")
 
 
 router.route("/")
+      .get(authenticate, ExpenseController.index)
       .post(authenticate, ExpenseController.store)
       
 
