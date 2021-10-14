@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 class EntryDisplayTable extends Component {
    
     render() {
-
+        const {entries} = this.props
+        console.log(entries)
         return (
             <div className="bg-white table-responsive shadow-sm rounded">
                 <table className="table">
@@ -19,9 +20,17 @@ class EntryDisplayTable extends Component {
                     </thead>
 
                     <tbody>
-                        <tr>
-                            
-                        </tr>
+                        
+                        {entries.map(entry => (
+                                <tr key={entry.id}>
+                                    <td>{entry.category_name}</td>
+                                    <td>{entry.amount}</td>
+                                    <td>{entry.description}</td>
+                                    <td>{entry.datetime}</td>
+                                    <td>Actions</td>
+                                </tr>
+                        ))}
+                        
                     </tbody>
                 </table>
                 

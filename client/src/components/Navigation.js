@@ -23,7 +23,7 @@ const Navigation = (props) => {
                 <NavDropdown.Item href="#action/3.4">Category</NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Link to="/logout" className="btn btn-danger">Logout</Link>
+            <Link to="/logout" className="btn btn-danger btn-sm"><b>logout</b> <i class="fas fa-sign-out-alt"></i></Link>
           </Navbar.Collapse>
         </Navbar>
       </div>

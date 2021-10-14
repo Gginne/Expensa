@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Redirect } from 'react-router';
+import {history} from "./utils"
 
 const apiClient = axios.create();
 
@@ -20,7 +20,7 @@ apiClient.interceptors.response.use((res) => {
    
    return res;
  }, async (err) => {
-   
+   console.log(err.response)
    if(err.response.status === 401){
 
       try{
@@ -38,8 +38,11 @@ apiClient.interceptors.response.use((res) => {
    } 
    
    console.log(err)
+   console.log(err.response)
    Promise.reject(err)
-   return <Redirect to="/logout" />
+
+   history.push("/logout")
+   window.location.reload(false)
  });
 
 export default apiClient

@@ -19,13 +19,13 @@ class Expenses extends Component {
 
     
     render() {
-        console.log(this.state.expenses)
+        const {expenses} = this.state
         return (
             <div class="row">
                 <div class="col-12 mt-5">
             
                     <h2 class="mb-3">Expenses</h2>
-                    <EntryDisplayTable />
+                    <EntryDisplayTable entries={expenses}/>
                 </div>
             </div>
         )
