@@ -20,19 +20,21 @@ apiClient.interceptors.response.use((res) => {
    
    return res;
  }, async (err) => {
-   console.log(err.response)
-   if(err.response.status === 401){
+   if(err.response.status === 401 || err.response.status === 500){
 
       try{
          const refresh = await axios.get("/api/refresh")
          localStorage.setItem('token', refresh.data.token)
          
          console.log("refreshing...")
-         err.response.config.data = JSON.parse(err.response.config.data)
+         if(err.response.config.method === "post"){
+            err.response.config.data = JSON.parse(err.response.config.data)
+         }
       
          return apiClient(err.response.config)
       }catch(e){
          console.log(e)
+         console.log(e.response)
       }
       
    } 

@@ -6,7 +6,7 @@ class EntryDisplayTable extends Component {
         const {entries} = this.props
         console.log(entries)
         return (
-            <div className="bg-white table-responsive shadow-sm rounded">
+            <div className="bg-white table-responsive shadow rounded">
                 <table className="table">
                     <thead>
                         <tr>
@@ -14,7 +14,7 @@ class EntryDisplayTable extends Component {
                             <th scope="col">amount</th>
                             <th scope="col">description</th>
                             <th scope="col">date/time</th>
-                            <th scope="col">actions</th>
+                            <th scope="col">delete</th>
                         </tr>
      
                     </thead>
@@ -27,7 +27,11 @@ class EntryDisplayTable extends Component {
                                     <td>{entry.amount}</td>
                                     <td>{entry.description}</td>
                                     <td>{entry.datetime}</td>
-                                    <td>Actions</td>
+                                    <td>
+                                        <button class="btn btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                         ))}
                         
