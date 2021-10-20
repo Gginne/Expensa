@@ -19,10 +19,11 @@ class AuthController{
         const accessToken = jwt.sign(user,  ACCESS_SECRET, { expiresIn: ACCESS_EXPIRATION+'s' });
 
         res.cookie('refresh_token', refreshToken, {
-            httpOnly: true, secure: true 
+            httpOnly: true, 
+            secure: true 
         });
 
-        return res.status(200).json({token: accessToken})
+        return {token: accessToken}
     }
 
 
@@ -53,8 +54,8 @@ class AuthController{
                 const {id} = newUser.cols
 
                 req.user = {email, username, id}
-
-                return this.generateTokens(req, res)
+                const tokens = await this.generateTokens(req,res)
+                return res.status(200).json(tokens)
             } catch(err){
                 console.log(err)
                 return res.redirect("/")
@@ -78,7 +79,8 @@ class AuthController{
 
                 req.user = {email, username, id}
 
-                return this.generateTokens(req, res)
+                const tokens = await this.generateTokens(req,res)
+                return res.status(200).json(tokens)
             } else {
                 return res.status(400).json({message: 'Invalid Username/email or password'})
             }
