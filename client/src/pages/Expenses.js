@@ -65,7 +65,6 @@ class Expenses extends Component {
                 </div>
                 <div class="col-sm-12 col-md-8">
             
-                   
                     <EntryDisplayTable entries={expenses}/>
                 </div>
             </div>
