@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import EntryTable from '../components/EntryTable'
+import EntryFormTable from '../components/EntryFormTable'
 import apiClient from '../helpers/apiClient'
 import {getCategories} from "../helpers/utils"
 import AuthContext from '../context/AuthContext'
@@ -54,7 +54,7 @@ class EntryPage extends Component {
         
                 <h2 class="mb-3">Add Entries</h2>
                 <div className="mt-4">
-                    <EntryTable submit={this.submitEntries} categories={categories}/>
+                    <EntryFormTable submit={this.submitEntries} categories={categories}/>
                 </div>
             </div>
         </div>

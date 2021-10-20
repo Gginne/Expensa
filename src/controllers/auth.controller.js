@@ -19,7 +19,6 @@ class AuthController{
         const accessToken = jwt.sign(user,  ACCESS_SECRET, { expiresIn: ACCESS_EXPIRATION+'s' });
 
         res.cookie('refresh_token', refreshToken, {
-            expires: new Date(Date.now() + Number(process.env.REFRESH_EXPIRATION)*1000), 
             httpOnly: true, secure: true 
         });
 

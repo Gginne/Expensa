@@ -7,7 +7,7 @@ const AuthController = require("../controllers/auth.controller")
 module.exports = async(req, res, next) => {
     const accessToken = req.header("x-auth-token")
     const refreshToken = req.cookies['refresh_token']
-    
+
     if(!accessToken || !refreshToken) return res.status(400).json({auth: false, message: "Missing Tokens"});
   
     let dRefresh = null

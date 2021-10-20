@@ -1,4 +1,5 @@
 const Expense = require('../models/Expense')
+const Category = require('../models/Category')
 const db = require("../database/db")
 
 class ExpenseController{
@@ -6,7 +7,19 @@ class ExpenseController{
     //GET - CRUD ROUTES
 
     static index = async (req, res) => { //Show all memebers of the model
+        try{
+            let expenses = await Expense.where(`user_id=${req.user.id}`)
 
+            for(let i = 0; i < expenses.length; i++){
+                let category = await Category.where(`id=${expenses[i].cols.category_id}`)
+                expenses[i].cols['category_name'] = category.cols.name
+            }
+            
+            return res.status(200).json(expenses)
+        } catch(err){
+            console.log(err)
+            return res.status(400).json({message: 'error'})
+        }
     }
 
     static create = async (req, res) =>{ //Go to expense creation form
@@ -34,6 +47,7 @@ class ExpenseController{
             if(amount && description){
                 try{
                     const expense = new Expense({amount, description, datetime, category_id, user_id: req.user.id})
+     
                     resExpenses.push(expense.cols)
                     await expense.save()
                 } catch(err){
