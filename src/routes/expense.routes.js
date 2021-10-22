@@ -10,7 +10,8 @@ router.route("/")
       .post(authenticate, ExpenseController.store)
       
 
-
+router.route("/delete/:id")
+      .delete(authenticate, ExpenseController.delete)
 
 
 module.exports = router

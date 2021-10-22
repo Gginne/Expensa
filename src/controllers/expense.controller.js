@@ -27,15 +27,6 @@ class ExpenseController{
         console.log(req.body)
     }
 
-    static edit = async (req, res) => { //Go to edit page form
-
-    }
-
-
-    static show(req, res){ //Show specific member of the model
-
-    }
-
 
     
     //POST - CRUD ROUTES
@@ -66,6 +57,20 @@ class ExpenseController{
     static async update(req, res){ //Update expense data in db
 
     }
+
+    static async delete(req, res){ //Update expense data in db
+        try{
+            let expense = await Expense.where(`id=${req.params.id}`)
+            expense.delete()
+            
+            return res.status(200).json(`Expense with id=${req.params.id} was deleted`)
+        } catch(err){
+            console.log(err)
+            return res.status(400).json({message: 'error'})
+        }
+    }
+
+
 }
 
 module.exports = ExpenseController
