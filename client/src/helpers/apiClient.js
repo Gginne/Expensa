@@ -44,7 +44,7 @@ apiClient.interceptors.response.use((res) => {
    Promise.reject(err)
 
    history.push("/logout")
-   //window.location.reload(false)
+   window.location.reload(false)
  });
 
 export default apiClient
