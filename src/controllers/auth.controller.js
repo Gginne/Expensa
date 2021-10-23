@@ -71,7 +71,7 @@ class AuthController{
 
         if (emailOrUsername && password) {
             //Get user from model
-            const user = await User.where(`email='${emailOrUsername}' OR username='${emailOrUsername}'`)
+            const [user] = await User.where(`email='${emailOrUsername}' OR username='${emailOrUsername}'`)
             const bcryptPassword = bcrypt.compareSync(password, user ? user.cols.password : '');
             if(user && bcryptPassword){
                 //Send message and authentication key

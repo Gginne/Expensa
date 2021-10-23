@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 
 class EntryDisplayTable extends Component {
-    
+
     formatDateTime = (dateString) => {
         let date = new Date(dateString)
         console.log(date)
         return date.toLocaleString()
     }
+
+
     render() {
         const {entries} = this.props
         console.log(entries)
@@ -32,7 +34,7 @@ class EntryDisplayTable extends Component {
                                     <td>{entry.description}</td>
                                     <td>{this.formatDateTime(entry.datetime)}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-danger">
+                                        <button class="btn btn-sm btn-danger" onClick={() => this.props.delete(entry.id)}>
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>

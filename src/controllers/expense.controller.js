@@ -9,11 +9,13 @@ class ExpenseController{
     static index = async (req, res) => { //Show all memebers of the model
         try{
             let expenses = await Expense.where(`user_id=${req.user.id}`)
-
+            
+            
             for(let i = 0; i < expenses.length; i++){
-                let category = await Category.where(`id=${expenses[i].cols.category_id}`)
+                let category = await Category.find(expenses[i].cols.category_id)
                 expenses[i].cols['category_name'] = category.cols.name
             }
+           
             
             return res.status(200).json(expenses)
         } catch(err){
@@ -60,7 +62,7 @@ class ExpenseController{
 
     static async delete(req, res){ //Update expense data in db
         try{
-            let expense = await Expense.where(`id=${req.params.id}`)
+            let expense = await Expense.find(req.params.id)
             expense.delete()
             
             return res.status(200).json(`Expense with id=${req.params.id} was deleted`)

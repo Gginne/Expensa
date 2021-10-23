@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import EntryDisplayTable from '../components/EntryDisplayTable'
-import {getExpenses} from "../helpers/utils"
+import {getExpenses, deleteExpense} from "../helpers/utils"
 import { Doughnut } from 'react-chartjs-2';
 
 class Expenses extends Component {
@@ -39,6 +39,12 @@ class Expenses extends Component {
         this.setState({expenses})
     }
 
+    deleteEntry = async (id) => {
+        deleteExpense(id)
+        const expenses = this.state.expenses.filter(exp => exp.id !== id)
+        this.setState({expenses})
+    }
+
     
     render() {
         const {expenses, chartData} = this.state
@@ -65,7 +71,7 @@ class Expenses extends Component {
                 </div>
                 <div class="col-sm-12 col-md-8">
             
-                    <EntryDisplayTable entries={expenses}/>
+                    <EntryDisplayTable entries={expenses} delete={this.deleteEntry}/>
                 </div>
             </div>
             </div>
