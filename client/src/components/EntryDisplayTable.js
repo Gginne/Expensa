@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 
 class EntryDisplayTable extends Component {
-    
+
     formatDateTime = (dateString) => {
         let date = new Date(dateString)
         console.log(date)
         return date.toLocaleString()
     }
+
+
     render() {
         const {entries} = this.props
         console.log(entries)
@@ -25,19 +27,28 @@ class EntryDisplayTable extends Component {
 
                     <tbody>
                         
-                        {entries.map(entry => (
+                        {entries.length ? (entries.map(entry => (
                                 <tr key={entry.id}>
                                     <td>{entry.category_name}</td>
                                     <td>{entry.amount}</td>
                                     <td>{entry.description}</td>
                                     <td>{this.formatDateTime(entry.datetime)}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-danger">
+                                        <button class="btn btn-sm btn-danger" onClick={() => this.props.delete(entry.id)}>
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
-                        ))}
+                        ))) : (
+                            <tr>
+                                <td colSpan={5}>
+                                    <h2 className="mt-2 text-center text-muted">
+                                        NO EXPENSES
+                                    </h2>
+
+                                </td>
+                            </tr>
+                        )}
                         
                     </tbody>
                 </table>

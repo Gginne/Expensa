@@ -9,11 +9,13 @@ class ExpenseController{
     static index = async (req, res) => { //Show all memebers of the model
         try{
             let expenses = await Expense.where(`user_id=${req.user.id}`)
-
+            
+            
             for(let i = 0; i < expenses.length; i++){
-                let category = await Category.where(`id=${expenses[i].cols.category_id}`)
+                let category = await Category.find(expenses[i].cols.category_id)
                 expenses[i].cols['category_name'] = category.cols.name
             }
+           
             
             return res.status(200).json(expenses)
         } catch(err){
@@ -21,21 +23,6 @@ class ExpenseController{
             return res.status(400).json({message: 'error'})
         }
     }
-
-    static create = async (req, res) =>{ //Go to expense creation form
-        //const {amout, descriprition} = req.body
-        console.log(req.body)
-    }
-
-    static edit = async (req, res) => { //Go to edit page form
-
-    }
-
-
-    static show(req, res){ //Show specific member of the model
-
-    }
-
 
     
     //POST - CRUD ROUTES
@@ -66,6 +53,20 @@ class ExpenseController{
     static async update(req, res){ //Update expense data in db
 
     }
+
+    static async delete(req, res){ //Update expense data in db
+        try{
+            let expense = await Expense.find(req.params.id)
+            expense.delete()
+            
+            return res.status(200).json(`Expense with id=${req.params.id} was deleted`)
+        } catch(err){
+            console.log(err)
+            return res.status(400).json({message: 'error'})
+        }
+    }
+
+
 }
 
 module.exports = ExpenseController

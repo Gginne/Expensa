@@ -23,4 +23,13 @@ export const getExpenses = async () => {
     }
 }
 
+export const deleteExpense = async id => {
+    try{
+        const res = await apiClient.delete( `/api/expenses/delete/${id}`)
+        console.log(res)
+    } catch(err){
+        console.log(err)
+    }
+}
+
 export const history = createBrowserHistory();
