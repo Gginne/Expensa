@@ -27,7 +27,7 @@ class EntryDisplayTable extends Component {
 
                     <tbody>
                         
-                        {entries.map(entry => (
+                        {entries.length ? (entries.map(entry => (
                                 <tr key={entry.id}>
                                     <td>{entry.category_name}</td>
                                     <td>{entry.amount}</td>
@@ -39,7 +39,16 @@ class EntryDisplayTable extends Component {
                                         </button>
                                     </td>
                                 </tr>
-                        ))}
+                        ))) : (
+                            <tr>
+                                <td colSpan={5}>
+                                    <h2 className="mt-2 text-center text-muted">
+                                        NO EXPENSES
+                                    </h2>
+
+                                </td>
+                            </tr>
+                        )}
                         
                     </tbody>
                 </table>

@@ -24,12 +24,6 @@ class ExpenseController{
         }
     }
 
-    static create = async (req, res) =>{ //Go to expense creation form
-        //const {amout, descriprition} = req.body
-        console.log(req.body)
-    }
-
-
     
     //POST - CRUD ROUTES
     static store = async (req, res) => { //Create new expense entry from input data in db
