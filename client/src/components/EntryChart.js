@@ -42,8 +42,8 @@ class EntryChart extends Component {
                         Object.entries(categories).map(entry => (
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 {entry[0]}
-                                <span class="badge badge-pill" style={{background: toMaterialStyle(entry[0])}}>
-                                    ${entry[1]}
+                                <span class="badge badge-pill text-white" 
+                                    style={{background: toMaterialStyle(entry[0], 600).backgroundColor}}>   ${entry[1]}
                                 </span>
                             </li>
                         ))
