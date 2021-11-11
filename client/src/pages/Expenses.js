@@ -36,7 +36,7 @@ class Expenses extends Component {
                 
                 <div class="col-sm-12 col-md-4">
                    
-                    <EntryChart entries={expenses}/>
+                    <EntryChart title="Expenses" entries={expenses}/>
                 </div>
                 <div class="col-sm-12 col-md-8">
             
