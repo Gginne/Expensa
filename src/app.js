@@ -19,6 +19,7 @@ app.use(cors())
 //Route imports
 const authRoutes = require('./routes/auth.routes')
 const expenseRoutes = require('./routes/expense.routes')
+const incomeRoutes = require('./routes/income.routes')
 const categoryRoutes = require('./routes/category.routes')
 
 //Routes
@@ -26,6 +27,7 @@ const router = express.Router()
 
 app.use('/api', authRoutes)
 app.use('/api/expenses', expenseRoutes)
+app.use('/api/incomes', incomeRoutes)
 app.use('/api/categories', categoryRoutes)
 
 

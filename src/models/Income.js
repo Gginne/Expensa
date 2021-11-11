@@ -1,6 +1,6 @@
 const Model = require('./Model')
 
-class Expense extends Model {
+class Income extends Model {
    
     static get table() {
         return "Incomes";
@@ -12,4 +12,4 @@ class Expense extends Model {
 
 }
 
-module.exports = Expense
+module.exports = Income
