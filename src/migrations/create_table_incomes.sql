@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS Income (
+CREATE TABLE IF NOT EXISTS Incomes (
         id INT NOT NULL AUTO_INCREMENT
         , amount INT NOT NULL 
         , description VARCHAR(200) NOT NULL 
