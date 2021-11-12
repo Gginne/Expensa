@@ -60,7 +60,8 @@ class Entry extends Component {
                 <td>
                     <select className="form-control" name="type" aria-label="Default select example" onChange={e => this.handleChange(e)} disabled={!edit}>
                         <option value="" selected={type === ''}>Type</option>
-                        <option value="expenses" selected={type === 'expenses'}>Expense</option>
+                        <option value="expense" selected={type === 'expense'}>Expense</option>
+                        <option value="income" selected={type === 'income'}>Income</option>
                     </select>
                 </td>
                 <td>

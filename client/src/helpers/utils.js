@@ -4,9 +4,10 @@ import { createBrowserHistory } from 'history';
 export const getCategories = async () => {
     try{
         const res = await apiClient.get("/api/categories")
-        const expenses = res.data.expense.map(({cols}) => ({name: cols.name, id:cols.id}))
+        const expense = res.data.expense.map(({cols}) => ({name: cols.name, id:cols.id}))
+        const income = res.data.income.map(({cols}) => ({name: cols.name, id:cols.id}))
         //console.log(res)
-        return {expenses}
+        return {expense, income}
     } catch(err){
         console.log(err)
     }
