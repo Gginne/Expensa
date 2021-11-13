@@ -7,7 +7,7 @@ const authenticate = require("../middleware/authenticate")
 
 router.route("/")
       .get(authenticate, IncomeController.index)
-      .post(IncomeController.store)
+      .post(authenticate, IncomeController.store)
       
 
 router.route("/delete/:id")

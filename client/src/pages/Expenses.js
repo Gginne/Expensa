@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import EntryDisplayTable from '../components/EntryDisplayTable'
 import EntryChart from '../components/EntryChart'
-import {getExpenses, deleteExpense} from "../helpers/utils"
+import {getEntries, deleteEntry} from "../helpers/utils"
 
 
 class Expenses extends Component {
@@ -15,13 +15,13 @@ class Expenses extends Component {
     }
 
     async componentDidMount(){
-        const expenses = await getExpenses()
+        const expenses = await getEntries("expenses")
         console.log(expenses)
         this.setState({expenses})
     }
-
-    deleteEntry = async (id) => {
-        deleteExpense(id)
+ 
+    delete = async (id) => {
+        deleteEntry("expenses",id)
         const expenses = this.state.expenses.filter(exp => exp.id !== id)
         this.setState({expenses})
     }
@@ -40,7 +40,7 @@ class Expenses extends Component {
                 </div>
                 <div class="col-sm-12 col-md-8">
             
-                    <EntryDisplayTable entries={expenses} delete={this.deleteEntry}/>
+                    <EntryDisplayTable entries={expenses} delete={this.delete}/>
                 </div>
             </div>
             </div>

@@ -28,6 +28,7 @@ class EntryPage extends Component {
     submitEntries = async (entries) => {
        
             let expenses = []
+            let incomes = []
             entries.forEach((entry) => {
                 const {type, amount, description, datetime, category} = entry.data
                 const entryData = { 
@@ -37,11 +38,13 @@ class EntryPage extends Component {
                     datetime: this.toSQLDatetime(datetime)
                 }
                 
-                if(type === "expenses") expenses.push(entryData);   
+                if(type === "expense") expenses.push(entryData);   
+                if(type === "income") incomes.push(entryData);   
             });
     
-            const res = await apiClient.post("/api/expenses", {expenses})
-            console.log(res.data)
+            const resExp = await apiClient.post("/api/expenses", {expenses})
+            const resInc = await apiClient.post("/api/incomes", {incomes})
+       
         
     }
 
