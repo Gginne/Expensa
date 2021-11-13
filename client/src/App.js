@@ -8,6 +8,7 @@ import Authentication from './pages/Authentication';
 import Dashboard from './pages/Dashboard';
 import EntryPage from './pages/EntryPage';
 import Expenses from './pages/Expenses'
+import Incomes from './pages/Incomes'
 import Logout from './components/Logout';
 
 import {AuthProvider} from "./context/AuthContext"
@@ -52,6 +53,7 @@ class App extends Component {
                   <Route exact path="/" component={props => <Dashboard {...props}/>} />
                   <Route exact path="/dashboard" component={props => <Dashboard {...props}/>} />
                   <Route exact path="/expenses" component={props => <Expenses {...props}/>} />
+                  <Route exact path="/incomes" component={props => <Incomes {...props}/>} />
                   <Route exact path="/new" component={props => <EntryPage {...props}/>} />
                   <Route exact path="/logout" component={props => <Logout {...props} logout={this.handleLogout} />} />
                 </AuthProvider>

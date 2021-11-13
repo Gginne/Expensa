@@ -13,21 +13,19 @@ export const getCategories = async () => {
     }
 }
 
-export const getExpenses = async () => {
+export const getEntries = async type => {
     try{
-        const res = await apiClient.get("/api/expenses")
-        const expenses = res.data.map(({cols}) => cols)
-        console.log(res)
-        return expenses
+        const res = await apiClient.get(`/api/${type}`)
+        const entries = res.data.map(({cols}) => cols)
+        return entries
     } catch(err){
         console.log(err)
     }
 }
 
-export const deleteExpense = async id => {
+export const deleteEntry = async (type,id) => {
     try{
-        const res = await apiClient.delete( `/api/expenses/delete/${id}`)
-        console.log(res)
+        const res = await apiClient.delete( `/api/${type}/delete/${id}`)
     } catch(err){
         console.log(err)
     }

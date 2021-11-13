@@ -4,31 +4,31 @@ import EntryChart from '../components/EntryChart'
 import {getEntries, deleteEntry} from "../helpers/utils"
 
 
-class Expenses extends Component {
+class Incomes extends Component {
 
     constructor(props){
         super(props)
         this.state = {
-            expenses: [],
+            incomes: [],
            
         }
     }
 
     async componentDidMount(){
-        const expenses = await getEntries("expenses")
-        console.log(expenses)
-        this.setState({expenses})
+        const incomes = await getEntries("incomes")
+        console.log(incomes)
+        this.setState({incomes})
     }
  
     delete = async (id) => {
-        deleteEntry("expenses",id)
-        const expenses = this.state.expenses.filter(exp => exp.id !== id)
-        this.setState({expenses})
+        deleteEntry("incomes",id)
+        const incomes = this.state.incomes.filter(exp => exp.id !== id)
+        this.setState({incomes})
     }
 
     
     render() {
-        const {expenses} = this.state
+        const {incomes} = this.state
         return (
             <div>
             
@@ -36,15 +36,15 @@ class Expenses extends Component {
                 
                 <div class="col-sm-12 col-md-4">
                    
-                    <EntryChart title="Expenses" entries={expenses}/>
+                    <EntryChart title="Incomes" entries={incomes}/>
                 </div>
                 <div class="col-sm-12 col-md-8">
             
-                    <EntryDisplayTable entries={expenses} delete={this.delete}/>
+                    <EntryDisplayTable entries={incomes} delete={this.delete}/>
                 </div>
             </div>
             </div>
         )
     }
 }
-export default Expenses
+export default Incomes

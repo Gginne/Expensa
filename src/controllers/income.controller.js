@@ -30,13 +30,14 @@ class IncomeController{
         const {incomes} = req.body
         const resIncomes = []
         incomes.forEach(async (income) => {
-            const {amount, description, category_id, datetime} = expense
+            const {amount, description, category_id, datetime} = income
             if(amount && description){
                 try{
                     const income = new Income({amount, description, datetime, category_id, user_id: req.user.id})
      
-                    resIncomes.push(expense.cols)
+                    resIncomes.push(income.cols)
                     await income.save()
+                    return res.status(200).json(resIncomes)
                 } catch(err){
                     return res.status(400).json({message: "Error creating income"})
                 }
@@ -46,7 +47,7 @@ class IncomeController{
             }
         })
 
-        return res.status(200).json(resExpenses)
+        
         
     }
 
