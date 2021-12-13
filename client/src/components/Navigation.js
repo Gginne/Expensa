@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {Navbar, Nav, NavDropdown} from 'react-bootstrap'
 
 
@@ -13,17 +13,17 @@ const Navigation = (props) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="#home"><Link to="/">Dashboard</Link></Nav.Link>
+              <Nav.Link><NavLink to="/">Dashboard</NavLink></Nav.Link>
               <NavDropdown title="Entries" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1"><Link to="/expenses">Expenses</Link></NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.4"><Link to="/incomes">Incomes</Link></NavDropdown.Item>
+                <NavDropdown.Item><NavLink to="/expenses">Expenses</NavLink></NavDropdown.Item>
+                <NavDropdown.Item><NavLink to="/incomes">Incomes</NavLink></NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="New Entry" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1"><Link to="/new">Expenses/Income</Link></NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.4">Category</NavDropdown.Item>
+                <NavDropdown.Item><NavLink to="/new">Expenses/Income</NavLink></NavDropdown.Item>
+                <NavDropdown.Item>Category</NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Link to="/logout" className="btn btn-danger btn-sm"><b>logout</b> <i class="fas fa-sign-out-alt"></i></Link>
+            <NavLink to="/logout" className="btn btn-danger btn-sm"><b>logout</b> <i class="fas fa-sign-out-alt"></i></NavLink>
           </Navbar.Collapse>
         </Navbar>
       </div>

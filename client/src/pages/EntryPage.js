@@ -20,11 +20,9 @@ class EntryPage extends Component {
         this.setState({categories})
     }
 
-    toSQLDatetime = d => {
-        d = new Date(d)
-        return d.toISOString().split('T')[0] + ' ' + d.toTimeString().split(' ')[0];
-    }
+    toSQLDatetime = d => d.replace('T', ' ')+":00";
 
+    
     submitEntries = async (entries) => {
        
             let expenses = []
@@ -37,7 +35,7 @@ class EntryPage extends Component {
                     description, 
                     datetime: this.toSQLDatetime(datetime)
                 }
-                
+                console.log(entryData.datetime)
                 if(type === "expense") expenses.push(entryData);   
                 if(type === "income") incomes.push(entryData);   
             });

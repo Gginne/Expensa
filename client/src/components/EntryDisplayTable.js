@@ -17,6 +17,7 @@ class EntryDisplayTable extends Component {
                 <table className="table">
                     <thead>
                         <tr>
+                            {this.props.showType && <th scope="col">type</th> }
                             <th scope="col">category</th>
                             <th scope="col">amount</th>
                             <th scope="col">description</th>
@@ -29,6 +30,7 @@ class EntryDisplayTable extends Component {
                         
                         {entries.length ? (entries.map(entry => (
                                 <tr key={entry.id}>
+                                    {this.props.showType && <td>{entry.type}</td> }
                                     <td>{entry.category_name}</td>
                                     <td>{entry.amount}</td>
                                     <td>{entry.description}</td>

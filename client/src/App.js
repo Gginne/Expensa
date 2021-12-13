@@ -43,7 +43,7 @@ class App extends Component {
      
       <Router>
         <div className="bg-light" style={{ height: '100vh'}}>
-          <div className="container">
+          <div className="custom-container">
             <Switch>
       
               {!isAuthenticated ? (
