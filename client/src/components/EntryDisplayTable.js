@@ -2,16 +2,10 @@ import React, { Component } from 'react'
 
 class EntryDisplayTable extends Component {
 
-    formatDateTime = (dateString) => {
-        let date = new Date(dateString)
-        console.log(date)
-        return date.toLocaleString()
-    }
-
+    formatDateTime = ds => new Date(ds).toLocaleString()
 
     render() {
         const {entries} = this.props
-        console.log(entries)
         return (
             <div className="bg-white table-responsive shadow rounded">
                 <table className="table">
@@ -36,7 +30,7 @@ class EntryDisplayTable extends Component {
                                     <td>{entry.description}</td>
                                     <td>{this.formatDateTime(entry.datetime)}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-danger" onClick={() => this.props.delete(entry.id)}>
+                                        <button class="btn btn-sm btn-danger" onClick={() => this.props.delete(entry.type, entry.id)}>
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
@@ -45,7 +39,7 @@ class EntryDisplayTable extends Component {
                             <tr>
                                 <td colSpan={5}>
                                     <h2 className="mt-2 text-center text-muted">
-                                        NO EXPENSES
+                                        {this.props.emptyText}
                                     </h2>
 
                                 </td>

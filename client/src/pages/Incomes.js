@@ -20,8 +20,8 @@ class Incomes extends Component {
         this.setState({incomes})
     }
  
-    delete = async (id) => {
-        deleteEntry("incomes",id)
+    delete = async (type, id) => {
+        deleteEntry(type,id)
         const incomes = this.state.incomes.filter(exp => exp.id !== id)
         this.setState({incomes})
     }
@@ -40,7 +40,7 @@ class Incomes extends Component {
                 </div>
                 <div class="col-sm-12 col-md-8">
             
-                    <EntryDisplayTable entries={incomes} delete={this.delete}/>
+                    <EntryDisplayTable entries={incomes} delete={this.delete} emptyText="NO INCOMES"/>
                 </div>
             </div>
             </div>

@@ -40,8 +40,8 @@ class EntryPage extends Component {
                 if(type === "income") incomes.push(entryData);   
             });
     
-            const resExp = await apiClient.post("/api/expenses", {expenses})
-            const resInc = await apiClient.post("/api/incomes", {incomes})
+            await apiClient.post("/api/expenses", {expenses})
+            await apiClient.post("/api/incomes", {incomes})
        
         
     }
