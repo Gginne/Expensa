@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { Bar } from 'react-chartjs-2';
 
-class EntryTracker extends Component {
+class EntryTotalTracker extends Component {
 
 
   getMonthEntries = () => {
@@ -64,4 +64,4 @@ class EntryTracker extends Component {
     }
 }
 
-export default EntryTracker
+export default EntryTotalTracker
