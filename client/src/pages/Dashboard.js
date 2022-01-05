@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import EntryDisplayTable from '../components/EntryDisplayTable'
-import EntryTracker from '../components/EntryTracker'
+import EntryTotalTracker from '../components/EntryTotalTracker'
+import EntryCategoryTracker from '../components/EntryCategoryTracker'
 import {getEntries, deleteEntry} from "../helpers/utils"
 class Dashboard extends Component {
     constructor(props){
@@ -20,12 +21,8 @@ class Dashboard extends Component {
 
     getRecentEntries = () => {
         const {expenses, incomes} = this.state
-        const entries = [...expenses, ...incomes].filter(entry => {
-            let date = new Date(entry.datetime)
-            let now = new Date()
-            return date.toDateString() === now.toDateString()
-        })
-        return entries
+        const entries = [...expenses, ...incomes].sort((a,b) => new Date(b.datetime) - new Date(a.datetime))
+        return entries.slice(0,5)
     }
 
 
@@ -40,10 +37,17 @@ class Dashboard extends Component {
         const recentEntries = this.getRecentEntries()
         return (
             <div class="row">
+            
+                  
                 <div class="col-sm-12 col-md-8 my-3">
-                    <EntryTracker expenses={expenses} incomes={incomes}/>
+                    <EntryTotalTracker expenses={expenses} incomes={incomes}/>
                 </div>
-                <div class="col-sm-12 col-md-8s">
+                <div class="col-sm-12 col-md-4 my-3">
+                    <EntryCategoryTracker expenses={expenses} incomes={incomes}/>
+                </div>
+        
+            
+                <div class="col-sm-12 col-md-12">
                     <EntryDisplayTable entries={recentEntries} delete={this.delete} emptyText="NO RECENT ENTRIES" showType/>
                 </div>
             </div>

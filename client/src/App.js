@@ -40,9 +40,8 @@ class App extends Component {
     
     //console.log(cookies.get('token'))
     return (
-     
-      <Router>
-        <div className="bg-light" style={{ height: '100vh'}}>
+    
+        <Router>
           <div className="custom-container">
             <Switch>
       
@@ -60,8 +59,8 @@ class App extends Component {
               )}
             </Switch>
           </div>
-        </div>
-    </Router>
+      </Router>
+
     )
   }
 }
