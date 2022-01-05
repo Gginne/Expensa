@@ -5,3 +5,29 @@ a:hover {
    color: #333;
    text-decoration: none;
 }
+
+.custom-container {
+  padding: 0 1rem;
+  margin: 0 auto;
+}
+@media (max-width: 1900px) {
+    .custom-container {
+      padding: 0 1rem;
+      margin: 0 auto;
+      max-width: 1600px;
+    }
+}
+@media (max-width: 1600px) {
+    .custom-container {
+      padding: 0 1rem;
+      margin: 0 auto;
+      max-width: 1250px;
+    }
+}
+@media (max-width: 768px) {
+  .custom-container {
+    padding: 0 1rem;
+    margin: 0 auto;
+    width: 550px;
+  }
+}

@@ -16,7 +16,7 @@ export const getCategories = async () => {
 export const getEntries = async type => {
     try{
         const res = await apiClient.get(`/api/${type}`)
-        const entries = res.data.map(({cols}) => cols)
+        const entries = res.data.map(({cols}) => ({...cols, type}))
         return entries
     } catch(err){
         console.log(err)
