@@ -13,7 +13,6 @@ class EntryFormTable extends Component {
     }
 
    
-
     handleSave = (newEntry) => {
         const {entries} = this.state
         const {id, data} = newEntry

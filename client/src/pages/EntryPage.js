@@ -47,6 +47,12 @@ class EntryPage extends Component {
         
     }
 
+    submitCategory = async(category) => {
+        await apiClient.post("/api/categories", category)
+        const categories = await getCategories()
+        this.setState({categories})
+    }
+
     render() {
         const {categories} = this.state
 
@@ -57,10 +63,10 @@ class EntryPage extends Component {
                 <h4 class="mb-3">Add Categories</h4>
                 
                 <div className="mt-4">
-                    <CategoryForm />
+                    <CategoryForm submit={this.submitCategory}/>
                 </div>
             </div>
-            <div class="col-12 mt-5">
+            <div class="col-12 mt-4">
         
                 <h4 class="mb-3">Add Entries</h4>
                 
