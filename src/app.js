@@ -17,10 +17,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
 
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, '../', 'client', 'build', 'index.html'))
-})
-
 
 //Route imports
 const authRoutes = require('./routes/auth.routes')
@@ -29,12 +25,16 @@ const incomeRoutes = require('./routes/income.routes')
 const categoryRoutes = require('./routes/category.routes')
 
 //Routes
-const router = express.Router()
 
 app.use('/api', authRoutes)
 app.use('/api/expenses', expenseRoutes)
 app.use('/api/incomes', incomeRoutes)
 app.use('/api/categories', categoryRoutes)
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, '../', 'client', 'build', 'index.html'))
+})
+
 
 
 //Export App
