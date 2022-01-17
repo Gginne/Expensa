@@ -30,7 +30,7 @@ class EntryTotalTracker extends Component {
 
     render() {
       const monthly = this.getMonthEntries()
-      const months = Object.keys(monthly).sort((a,b) => new Date(a) - new Date(b))
+      const months = Object.keys(monthly).sort((a,b) => new Date(a) - new Date(b)).slice(-5)
       const data = {
           labels: months,
           datasets: [

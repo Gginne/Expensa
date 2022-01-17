@@ -13,7 +13,6 @@ class EntryFormTable extends Component {
     }
 
    
-
     handleSave = (newEntry) => {
         const {entries} = this.state
         const {id, data} = newEntry
@@ -50,9 +49,9 @@ class EntryFormTable extends Component {
 
         const canSubmit = !entries.some(({edit}) => edit) && entries.length > 0
     
-        const expenseSum = entries.reduce((accum, {data}) => (data.type === "expenses" ? Number(data.amount) + accum : 0), 0)
+        const expenseSum = entries.reduce((accum, {data}) => (data.type === "expense" ? Number(data.amount) + accum : 0), 0)
         
-        const incomeSum = entries.reduce((accum, {data}) => (data.type === "incomes" ? Number(data.amount) + accum : 0), 0)
+        const incomeSum = entries.reduce((accum, {data}) => (data.type === "income" ? Number(data.amount) + accum : 0), 0)
 
         return (
             <div className="bg-white table-responsive shadow-sm rounded">

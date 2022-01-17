@@ -18,10 +18,7 @@ const Navigation = (props) => {
                 <NavDropdown.Item><NavLink to="/expenses">Expenses</NavLink></NavDropdown.Item>
                 <NavDropdown.Item><NavLink to="/incomes">Incomes</NavLink></NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown title="New Entry" id="basic-nav-dropdown">
-                <NavDropdown.Item><NavLink to="/new">Expenses/Income</NavLink></NavDropdown.Item>
-                <NavDropdown.Item>Category</NavDropdown.Item>
-              </NavDropdown>
+              <Nav.Link><NavLink to="/new">Add Entries</NavLink></Nav.Link>
             </Nav>
             <NavLink to="/logout" className="btn btn-danger btn-sm"><b>logout</b> <i class="fas fa-sign-out-alt"></i></NavLink>
           </Navbar.Collapse>
