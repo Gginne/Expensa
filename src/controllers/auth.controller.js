@@ -32,16 +32,18 @@ class AuthController{
         let {email, username, password, password2} = req.body
 
         if(!email || !username || !password || !password2){
-            console.log('here')
+            console.log('mismatch')
             return res.status(400).json({message:'Please fill in all the fields'});
         }
         if(password != password2){
+            console.log('mismatch2')
             return res.status(400).json({message:'Passwords dont match'});
         }
 
         const foundEmail = await User.where(`email='${email}'`)
         const foundUsername = await User.where(`username='${username}'`)
         if(foundEmail || foundUsername){
+            console.log('found user or email')
             if(foundEmail) return res.status(400).json({message: "Email already exists"});
             if(foundUsername) return res.status(400).json({message: "Username already exists"});
         } else {

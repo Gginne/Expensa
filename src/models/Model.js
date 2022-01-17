@@ -47,7 +47,7 @@ class Model{
         try{
             let rows = await db.query(`SELECT * FROM ${this.table} WHERE ${params}`)
             rows = rows.map(row => new this.prototype.constructor(row))
-
+            if(rows.length == 0) return false
             return rows
         } catch(err){
             throw err
