@@ -42,10 +42,10 @@ class AuthController{
 
         const foundEmail = await User.where(`email='${email}'`)
         const foundUsername = await User.where(`username='${username}'`)
-        if(foundEmail || foundUsername){
+        if(foundEmail.length == 0 || foundUsername.length == 0){
             console.log('found user or email')
-            if(foundEmail) return res.status(400).json({message: "Email already exists"});
-            if(foundUsername) return res.status(400).json({message: "Username already exists"});
+            if(foundEmail.length == 0) return res.status(400).json({message: "Email already exists"});
+            if(foundEmail.length == 0) return res.status(400).json({message: "Username already exists"});
         } else {
             try{
                 const salt = await bcrypt.genSaltSync(10)
