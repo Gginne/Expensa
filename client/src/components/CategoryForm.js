@@ -22,6 +22,7 @@ class CategoryForm extends Component {
 
         if(type && name){
             this.props.submit(this.state)
+            this.setState({name: '', type: '0'})
         }
         
         e.preventDefault()
