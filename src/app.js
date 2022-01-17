@@ -1,6 +1,7 @@
 //Imports
 require("dotenv").config()
 const express = require("express")
+const path = require("path")
 const cors = require("cors")
 const cookieParser = require('cookie-parser')
 
@@ -11,6 +12,7 @@ app.set('port', process.env.PORT || 5000)
 
 //Middleware
 app.use(cookieParser())
+app.use(express.static(path.join(__dirname, '/../client/build')))
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
