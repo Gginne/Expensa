@@ -15,6 +15,10 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
 
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, '../', 'client', 'build', 'index.html'))
+})
+
 
 //Route imports
 const authRoutes = require('./routes/auth.routes')
