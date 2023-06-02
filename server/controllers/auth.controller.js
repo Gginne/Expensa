@@ -18,12 +18,7 @@ class AuthController{
         const refreshToken = jwt.sign(user, REFRESH_SECRET, { expiresIn: REFRESH_EXPIRATION+'s' });
         const accessToken = jwt.sign(user,  ACCESS_SECRET, { expiresIn: ACCESS_EXPIRATION+'s' });
 
-        res.cookie('refresh_token', refreshToken, {
-            httpOnly: true, 
-            secure: true 
-        });
-
-        return {token: accessToken}
+        return {access: accessToken, refresh: refreshToken}
     }
 
 
@@ -50,15 +45,20 @@ class AuthController{
         } else {
             try{
                 const salt = await bcrypt.genSaltSync(10)
+
                 password = await bcrypt.hash(password, salt);
+
                 const newUser = new User({email, username, password})
                 await newUser.save()
                 //Send message and authentication key
                 const {id} = newUser.cols
 
                 req.user = {email, username, id}
+
                 const tokens = await this.generateTokens(req,res)
-                return res.status(200).json(tokens)
+
+                return res.status(200).json({...tokens, user:{email, username} })
+                
             } catch(err){
                 console.log(err)
                 
@@ -83,7 +83,8 @@ class AuthController{
                 req.user = {email, username, id}
 
                 const tokens = await this.generateTokens(req,res)
-                return res.status(200).json(tokens)
+
+                return res.status(200).json({...tokens, user: {email, username} })
             } else {
                 return res.status(400).json({message: 'Invalid Username/email or password'})
             }

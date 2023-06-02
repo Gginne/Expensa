@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/UserContext";
+import { useNavigate } from 'react-router-dom';
 
 export default function AuthForms() {
   const [form, setForm] = useState("login");
   const { login, register } = useAuth();
-
-  const handleSubmit = (e) => {
+  const navigate = useNavigate()
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
     const formObject = Object.fromEntries([...formData]);
 
     if (form === "login") {
-      login(formObject);
+      await login(formObject);
     } else if (form === "register") {
-      register(formObject);
+      await register(formObject);
     }
+
+    navigate("/")
   };
 
   return (
