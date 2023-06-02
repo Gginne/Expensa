@@ -8,6 +8,7 @@ class Authentication extends Component {
     handleLogin = async (data) => {
         try{
             const response = await axios.post("/api/login", data)
+            console.log(response)
             const {token} = response.data
         
             this.props.auth(token)

@@ -1,68 +1,42 @@
-import React, { Component } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import React from "react";
 
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+import Authentication from "./pages/Authentication";
+import Dashboard from "./pages/Dashboard";
+import EntryPage from "./pages/EntryPage";
+import Expenses from "./pages/Expenses";
+import Incomes from "./pages/Incomes";
+import AuthLayout from "./components/AuthLayout";
 
-import Authentication from './pages/Authentication';
-import Dashboard from './pages/Dashboard';
-import EntryPage from './pages/EntryPage';
-import Expenses from './pages/Expenses'
-import Incomes from './pages/Incomes'
-import Logout from './components/Logout';
+import { UserProvider } from "./context/UserContext";
 
-import {AuthProvider} from "./context/AuthContext"
+export default function App() {
+  return (
+    <Router>
+      <div className="custom-container">
+        <UserProvider>
+          <Routes>
+            <Route path="/auth" element={<Authentication />} />
 
-
-class App extends Component {
-
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      isAuthenticated: Boolean(localStorage.getItem('token'))
-    };
-  }
-
-  handleAuth = token => {
-    localStorage.setItem('token', token);
-    this.setState({isAuthenticated: true})
-  }
-
-  handleLogout = () => {
-    localStorage.removeItem('token');
-    this.setState({isAuthenticated: false})
-  }
-
-
-  render() {
-    const {isAuthenticated} = this.state
-    
-    //console.log(cookies.get('token'))
-    return (
-    
-        <Router>
-          <div className="custom-container">
-            <Switch>
-      
-              {!isAuthenticated ? (
-                <Route path="/" component={props => <Authentication {...props} auth={this.handleAuth}/>} />
-              ) : (
-                <AuthProvider>
-                  <Route exact path="/" component={props => <Dashboard {...props}/>} />
-                  <Route exact path="/dashboard" component={props => <Dashboard {...props}/>} />
-                  <Route exact path="/expenses" component={props => <Expenses {...props}/>} />
-                  <Route exact path="/incomes" component={props => <Incomes {...props}/>} />
-                  <Route exact path="/new" component={props => <EntryPage {...props}/>} />
-                  <Route exact path="/logout" component={props => <Logout {...props} logout={this.handleLogout} />} />
-                </AuthProvider>
-              )}
-            </Switch>
-          </div>
-      </Router>
-
-    )
-  }
+            <Route element={<AuthLayout />}>
+              <Route exact path="/" element={<Dashboard />} />
+            </Route>
+            <Route element={<AuthLayout />}>
+              <Route exact path="/exenses" element={<Expenses />} />
+            </Route>
+            <Route element={<AuthLayout />}>
+              <Route exact path="/incomes" element={<Incomes />} />
+            </Route>
+            <Route element={<AuthLayout />}>
+              <Route exact path="/incomes" element={<Incomes />} />
+            </Route>
+            <Route element={<AuthLayout />}>
+              <Route exact path="/new" element={<EntryPage />} />
+            </Route>
+          </Routes>
+        </UserProvider>
+      </div>
+    </Router>
+  );
 }
-
-export default App 

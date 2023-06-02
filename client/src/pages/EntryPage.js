@@ -3,11 +3,9 @@ import EntryFormTable from '../components/EntryFormTable'
 import CategoryForm from '../components/CategoryForm'
 import apiClient from '../helpers/apiClient'
 import {getCategories} from "../helpers/utils"
-import AuthContext from '../context/AuthContext'
 
 
 class EntryPage extends Component {
-    static contextType = AuthContext
 
     constructor(props){
         super(props)
