@@ -7,7 +7,7 @@ const db_config = {
     host: process.env.DB_HOST || "localhost",
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "",
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME || "expensa"
 }
 
 const db = mysql.createPool(db_config);

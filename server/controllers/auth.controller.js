@@ -39,6 +39,7 @@ class AuthController{
             console.log('mismatch2')
             return res.status(400).json({message:'Passwords dont match'});
         }
+        
 
         const foundEmail = await User.where(`email='${email}'`)
         const foundUsername = await User.where(`username='${username}'`)
@@ -69,11 +70,12 @@ class AuthController{
 
     static login = async (req, res) => {
         const {emailOrUsername, password} = req.body
-
+    
         if (emailOrUsername && password) {
             //Get user from model
             const [user] = await User.where(`email='${emailOrUsername}' OR username='${emailOrUsername}'`)
             const bcryptPassword = bcrypt.compareSync(password, user ? user.cols.password : '');
+            console.log(password)
             if(user && bcryptPassword){
                 //Send message and authentication key
                 const {email, username, id} = user.cols
