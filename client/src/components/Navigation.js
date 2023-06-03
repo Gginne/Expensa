@@ -1,10 +1,11 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import {Navbar, Nav, NavDropdown} from 'react-bootstrap'
+import { useAuth } from "../context/UserContext";
 
 
-const Navigation = (props) => {
-
+const Navigation = () => {
+  const {logout} = useAuth()
   
     return(
       <div class="shadow rounded">
@@ -20,7 +21,7 @@ const Navigation = (props) => {
               </NavDropdown>
               <Nav.Link><NavLink to="/new">Add Entries</NavLink></Nav.Link>
             </Nav>
-            <NavLink to="/logout" className="btn btn-danger btn-sm"><b>logout</b> <i class="fas fa-sign-out-alt"></i></NavLink>
+            <NavLink onClick={logout} className="btn btn-danger btn-sm"><b>logout</b> <i class="fas fa-sign-out-alt"></i></NavLink>
           </Navbar.Collapse>
         </Navbar>
       </div>

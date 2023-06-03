@@ -1,48 +1,28 @@
-import React, { Component } from 'react'
-import AuthForms from "../components/AuthForms"
-import axios from 'axios'
+import React from "react";
+import AuthForms from "../components/AuthForms";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useAuth } from "../context/UserContext";
 
-class Authentication extends Component {
+export default function Authentication() {
+  const navigate = useNavigate();
+  const {login, register, currentUser} = useAuth()
 
+  const handleAuth = async (e) => {
+    e.preventDefault();
 
-    handleLogin = async (data) => {
-        try{
-            const response = await axios.post("/api/login", data)
-            console.log(response)
-            const {token} = response.data
-        
-            this.props.auth(token)
-    
-            this.props.history.push('/dashboard');
-        } catch(err){
-            console.log(err)
-        }
-        
+    const formData = new FormData(e.target);
+    const formObject = Object.fromEntries([...formData]);
+
+    const formName = e.target.name
+
+    if (formName === "login") {
+      await login(formObject);
+    } else if (formName === "register") {
+      await register(formObject);
     }
 
-    handleRegister = async (data) => {
-        try{
-            const response = await axios.post("/api/register", data)
-            const {token} = response.data
-        
-            this.props.auth(token)
-    
-            this.props.history.push('/dashboard');
-        } catch(err){
-            console.log(err)
-        }
-        
-     
-       
-    }
+    navigate("/");
+  };
 
-    render() {
-        return (
-            <div>
-                <AuthForms login={this.handleLogin} register={this.handleRegister} />
-            </div>
-        )
-    }
+  return currentUser === null ? <AuthForms onSubmit={handleAuth} /> : <Navigate to={"/"} replace />;
 }
-
-export default Authentication

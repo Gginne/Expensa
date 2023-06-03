@@ -1,27 +1,10 @@
 import React, { useState } from "react";
-import { useAuth } from "../context/UserContext";
-import { useNavigate } from 'react-router-dom';
 
-export default function AuthForms() {
+
+
+export default function AuthForms({onSubmit}) {
   const [form, setForm] = useState("login");
-  const { login, register } = useAuth();
-  const navigate = useNavigate()
   
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-    const formObject = Object.fromEntries([...formData]);
-
-    if (form === "login") {
-      await login(formObject);
-    } else if (form === "register") {
-      await register(formObject);
-    }
-
-    navigate("/")
-  };
-
   return (
     <div class="row">
       <div class="col-12 mt-5">
@@ -61,7 +44,7 @@ export default function AuthForms() {
                   class={`tab-pane ${form === "login" && "active"}`}
                   role="tabpanel"
                 >
-                  <form onSubmit={handleSubmit}>
+                  <form name="login" onSubmit={onSubmit}>
                     <div class="mb-3">
                       <label for="emailOrUsername" class="form-label">
                         Email or Username
@@ -97,7 +80,7 @@ export default function AuthForms() {
                   role="tabpanel"
                   aria-labelledby="register-tab"
                 >
-                  <form onSubmit={handleSubmit}>
+                  <form name="register" onSubmit={onSubmit}>
                     <div class="mb-3">
                       <label for="email" class="form-label">
                         Email

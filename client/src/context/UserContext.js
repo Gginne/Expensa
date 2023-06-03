@@ -20,11 +20,14 @@ export function UserProvider({ children }) {
 
       setSessionStorage("access", access);
       setSessionStorage("refresh", refresh);
+      setSessionStorage("user", user);
+      
       setCurrentUser(user);
     } catch (err) {
       console.log(err);
     }
   };
+  
   const register = async (data) => {
     try {
       const response = await axios.post("/api/register", data);
@@ -33,6 +36,8 @@ export function UserProvider({ children }) {
 
       setSessionStorage("access", access);
       setSessionStorage("refresh", refresh);
+      setSessionStorage("user", user);
+
       setCurrentUser(user);
     } catch (err) {
       console.log(err);
@@ -46,10 +51,9 @@ export function UserProvider({ children }) {
 
   const value = {
     currentUser,
-    getAccessToken: () => getSessionStorage("access", null),
     register,
     login,
-    logout,
+    logout
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
