@@ -18,12 +18,7 @@ class AuthController{
         const refreshToken = jwt.sign(user, REFRESH_SECRET, { expiresIn: REFRESH_EXPIRATION+'s' });
         const accessToken = jwt.sign(user,  ACCESS_SECRET, { expiresIn: ACCESS_EXPIRATION+'s' });
 
-        res.cookie('refresh_token', refreshToken, {
-            httpOnly: true, 
-            secure: true 
-        });
-
-        return {token: accessToken}
+        return {access: accessToken, refresh: refreshToken}
     }
 
 
@@ -39,25 +34,31 @@ class AuthController{
             console.log('mismatch2')
             return res.status(400).json({message:'Passwords dont match'});
         }
+        
 
         const foundEmail = await User.where(`email='${email}'`)
         const foundUsername = await User.where(`username='${username}'`)
-        if(foundEmail.length == 0 || foundUsername.length == 0){
-            console.log('found user or email')
-            if(foundEmail.length == 0) return res.status(400).json({message: "Email already exists"});
-            if(foundEmail.length == 0) return res.status(400).json({message: "Username already exists"});
+
+        if(foundEmail.length != 0 || foundUsername.length != 0){
+            if(foundEmail.length != 0) return res.status(400).json({message: "Email already exists"});
+            if(foundUsername.length != 0) return res.status(400).json({message: "Username already exists"});
         } else {
             try{
                 const salt = await bcrypt.genSaltSync(10)
+
                 password = await bcrypt.hash(password, salt);
+
                 const newUser = new User({email, username, password})
                 await newUser.save()
                 //Send message and authentication key
                 const {id} = newUser.cols
 
                 req.user = {email, username, id}
+
                 const tokens = await this.generateTokens(req,res)
-                return res.status(200).json(tokens)
+
+                return res.status(200).json({...tokens, user:{email, username} })
+                
             } catch(err){
                 console.log(err)
                 
@@ -69,11 +70,12 @@ class AuthController{
 
     static login = async (req, res) => {
         const {emailOrUsername, password} = req.body
-
+    
         if (emailOrUsername && password) {
             //Get user from model
             const [user] = await User.where(`email='${emailOrUsername}' OR username='${emailOrUsername}'`)
             const bcryptPassword = bcrypt.compareSync(password, user ? user.cols.password : '');
+            console.log(password)
             if(user && bcryptPassword){
                 //Send message and authentication key
                 const {email, username, id} = user.cols
@@ -81,7 +83,8 @@ class AuthController{
                 req.user = {email, username, id}
 
                 const tokens = await this.generateTokens(req,res)
-                return res.status(200).json(tokens)
+
+                return res.status(200).json({...tokens, user: {email, username} })
             } else {
                 return res.status(400).json({message: 'Invalid Username/email or password'})
             }

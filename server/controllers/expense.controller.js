@@ -34,7 +34,6 @@ class ExpenseController{
             if(amount && description){
                 try{
                     const expense = new Expense({amount, description, datetime, category_id, user_id: req.user.id})
-     
                     resExpenses.push(expense.cols)
                     await expense.save()
                 } catch(err){

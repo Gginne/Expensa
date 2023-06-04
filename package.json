@@ -4,8 +4,8 @@
   "description": "Basic Rest API for web applications",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "serve": "nodemon src/index.js",
+    "start": "node server/index.js",
+    "serve": "nodemon server/index.js",
     "client": "cd client && npm run start",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
